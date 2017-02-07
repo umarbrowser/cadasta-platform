@@ -75,6 +75,32 @@
 {% block content %}
 
 <div class="col-sm-12 content-single">
+  <div class="top-search header page-header" style="border-left: solid 1px #fff; position: relative; top: 0; height: 50px; min-height: 50px; padding-top: 8px;">
+    <label class="pull-left" style="width: 15%;"><div class="input-group" style="padding: 0 10px 0 20px;"><span class="input-group-addon" style="padding: 2px 12px;
+font-size: 13px;" ><span class="glyphicon glyphicon-search" style="font-size: 12px;"></span></span><input class="form-control input-sm" style="" placeholder="Search records" aria-controls="DataTables_Table_0" type="search"></div></label>
+    <div class="pull-left" style="padding-right: 10px;">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 80px;">
+          Filter <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pull-left" style="color: #fff; padding: 4px 10px;">
+      <strong>5</strong> records showing
+    </div>
+    <div class="button btn-group btn-group-sm pull-right" role="toolbar" style="padding-right: 20px;">
+      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-map2.png" style="width: 22px; padding: 4px;"></button>
+      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-split-green.png" style="width: 22px; padding: 4px;"></button>
+      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"></button>
+    </div>
+  </div>
   <div class="row">
     <!-- Start overview map  -->
     <div class="col-md-8 map">

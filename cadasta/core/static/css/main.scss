@@ -174,7 +174,7 @@ body.tinted-bg #page-content { // for bg image
   margin: 0 auto;
   padding: 0;
   position: absolute;
-  top: 180px;
+  top: 120px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -372,12 +372,23 @@ main.container-fluid {
     }
     .nav-tabs {
       li > a {
-        font-size: 13px;
+        font-family: $font-family-sans-serif-alt;
         padding: 10px;
+        border-radius: 0;
+        background: $body-bg;
+        color: $gray-dark;
+        &:hover, a:hover, a:focus {
+          //@include button-variant(#fff, lighten($btn-blue-bg, 5%), $brand-gold);
+          border-top: solid 4px $brand-gold;
+          transition: all 0.3s ease 0s;
+        }
       }
       li.active > a, li.active > a:hover, li.active > a:focus {
         border-color: $table-border-color;
         border-bottom-color: transparent;
+        background: #fff;
+        border-top: solid 4px $brand-gold;
+        color: #555;
       }
     }
     section > p:first-child {
@@ -385,10 +396,15 @@ main.container-fluid {
     }
     h4 {
       font-family: $font-family-sans-serif-alt;
-      text-transform: uppercase;
-      opacity: 0.8;
+      //text-transform: uppercase;
+      //opacity: 0.8;
       letter-spacing: 0;
       padding-top: 10px;
+      .size {
+        font-size: 12px;
+        color: $gray-medium;
+        font-weight: normal;
+      }
     }
     .glyphicon-globe, .glyphicon-envelope, .glyphicon-earphone { // url and contacts in overview
       opacity: 0.7;
@@ -665,8 +681,9 @@ table.table-location { // location details in map area
     border-top: none;
   }
   label {
-    text-transform: uppercase;
-    font-size: 12px;
+    //text-transform: uppercase;
+    //font-size: 12px;
+    font-weight: bold;
   }
 }
 

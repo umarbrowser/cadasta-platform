@@ -27,8 +27,8 @@
     <div id="cadasta">
       <!-- Site header -->
       <header class="header" role="banner">
-        <div class="container">
-          <div id="logo" class="pull-left">
+        <div class="container-fluid">
+          <div id="logo" class="pull-left" style="padding-left: 14px;">
             <a href="/"><img src="{% static 'img/logo-white.png' %}" /></a>
           </div>
           <div class="reg-links pull-right">
@@ -68,10 +68,10 @@
             {% endif %}
           </div>
           <!-- Help -->
-          <a class="btn btn-help pull-right visible-md-inline visible-lg-inline" aria-label="Help" id="help-link" href="#">
+          <a class="btn btn-help pull-right visible-md-inline visible-lg-inline" aria-label="Help" id="help-link" href="#" style="padding-top: 10px;">
             <span class="glyphicon glyphicon-question-sign"></span>
           </a>
-          <nav class="nav" role="navigation">
+          <nav class="nav hidden" role="navigation">
             <ul class="list-inline visible-md-block visible-lg-block">
               <li class="projects">
                 <a href="{% url 'project:list' %}">
@@ -198,8 +198,34 @@
     {% block extra_script %}{% endblock %}
     <script>
     $(document).ready(function () {
-      $('.datatable').DataTable({
+      $('.datatable').not('#raw').DataTable({
         conditionalPaging: true,
+        "dom": '<"table-search clearfix"f>t<"table-entries"i><"table-num"l><"table-pagination"p>',
+        "language": {
+          "emptyTable":     "{% trans "No data available in table" %}",
+          "info":           "{% trans "Showing _START_ - _END_ of _TOTAL_" %}",
+          "infoEmpty":      "{% trans "Showing 0 - 0 of 0" %}",
+          "infoFiltered":   "{% trans "(filtered from _MAX_ total rows)" %}",
+          "lengthMenu":     "{% trans "Show _MENU_ rows" %}",
+          "search": '<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>',
+          "searchPlaceholder": '{% trans "Search" %}',
+          "zeroRecords":    "{% trans "No matching records found" %}",
+          "paginate": {
+            "next": '<span class="glyphicon glyphicon-triangle-right"></span>',
+            "previous": '<span class="glyphicon glyphicon-triangle-left"></span>',
+            "first":      "{% trans "First" %}",
+            "last":       "{% trans "Last" %}"
+          },
+          "aria": {
+            "sortAscending":  ": {% trans "activate to sort column ascending" %}",
+            "sortDescending": ": {% trans "activate to sort column descending" %}"
+          }
+        }
+      });
+      $('#raw').DataTable({
+        conditionalPaging: true,
+        aaSorting: [],
+        "paging": false,
         "dom": '<"table-search clearfix"f>t<"table-entries"i><"table-num"l><"table-pagination"p>',
         "language": {
           "emptyTable":     "{% trans "No data available in table" %}",

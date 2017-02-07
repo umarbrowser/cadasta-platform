@@ -15,6 +15,8 @@
 <script src="{% static 'js/leaflet.markercluster.js' %}"></script>
 <script src="{% static 'js/L.Map.Deflate.js' %}"></script>
 <script src="{% static 'js/map_utils.js' %}"></script>
+
+<script src="{% static 'js/BootSideMenu.js' %}"></script>
 <script>
   function locations_map_init(map, options) {
     // TODO: It seems Leaflet has a bug with L.geoJson()
@@ -42,6 +44,53 @@
     add_spatial_resources(map, url);
   }
 </script>
+
+<script>
+$(document).ready(function(){
+
+  $('#test').BootSideMenu({
+      side: "right",
+      pushBody: true,
+      remember: false,
+      width: '33.33333%'
+  });
+
+  $("#apartment").mouseover(function(){
+    $("svg g:nth-child(4) path").css({"fill-opacity": "1"});
+  });
+  $("#apartment").mouseleave(function(){
+    $("svg g:nth-child(4) path").css("fill-opacity", ".5");
+  });
+  $("#building1").mouseover(function(){
+    $("svg g:nth-child(2) path").css("fill-opacity", "1");
+  });
+  $("#building1").mouseleave(function(){
+    $("svg g:nth-child(2) path").css("fill-opacity", ".5");
+  });
+  $("#building2").mouseover(function(){
+    $("svg g:nth-child(6) path").css("fill-opacity", "1");
+  });
+  $("#building2").mouseleave(function(){
+    $("svg g:nth-child(6) path").css("fill-opacity", ".5");
+  });
+  $("#parcel").mouseover(function(){
+    $("svg g:nth-child(3) path").css("fill-opacity", "1");
+  });
+  $("#parcel").mouseleave(function(){
+    $("svg g:nth-child(3) path").css("fill-opacity", ".3");
+  });
+  $("#misc").mouseover(function(){
+    $("svg g:nth-child(5) path").css("fill-opacity", "1");
+  });
+  $("#misc").mouseleave(function(){
+    $("svg g:nth-child(5) path").css("fill-opacity", ".5");
+  });
+
+});
+
+
+</script>
+
 {% endblock %}
 
 {% block extra_head %}
@@ -53,18 +102,230 @@
   #project-map {
     height: 600px;
   }
+  svg g:nth-child(3) path {  /* parcel */
+    fill: #2c7fb8;
+    stroke: #2c7fb8;
+    fill-opacity: 0.3;
+  }
+  svg g:nth-child(2) path,
+  svg g:nth-child(6) path {  /* building */
+    fill: #a1dab4;
+    stroke: #a1dab4;
+    fill-opacity: 0.5;
+  }
+  svg g:nth-child(4) path {  /* apartment */
+    fill: #41b6c4;
+    stroke: #41b6c4;
+    fill-opacity: 0.5;
+  }
+  svg g:nth-child(5) path {  /* misc */
+    fill: #253494;
+    stroke: #253494;
+    fill-opacity: 0.5;
+  }
+  .table-search {
+    display: none;
+  } 
+  tr.title  {
+    border-top: solid 2px #0e305e;
+
+
+  }
+  tr.title h4 {
+    text-transform: uppercase;
+    opacity: .7;
+    font-size: 20px;
+    margin-bottom: 0;
+
+  }
+  tr.title td {
+    padding: 0 8px;
+  }
+  tr.title span {
+    text-transform: none;
+    padding-left: 4px;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 
 <div class="col-md-12 content-single">
+  <div class="top-search header page-header" style="border-left: solid 1px #fff; position: relative; top: 0; height: 50px; min-height: 50px;">
+    <label class="pull-left" style="width: 15%;  padding-top: 8px;"><div class="input-group" style="padding: 0 10px 0 20px;"><span class="input-group-addon" style="padding: 2px 12px;
+font-size: 13px;" ><span class="glyphicon glyphicon-search" style="font-size: 12px;"></span></span><input class="form-control input-sm" style="" placeholder="Search records" aria-controls="DataTables_Table_0" type="search"></div></label>
+    <div class="pull-left" style="padding-right: 10px; padding-top: 8px;">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 80px;">
+          Filter <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pull-left">
+      <label class="control-label" for="id_select_file-entity_types_parties" style="position: relative; top: 12px; padding-left: 10px; padding-right: 10px;">
+        <input type="checkbox" id="id_select_file-entity_types_parties" name="select_file-entity_types" type="checkbox" value="PT" data-parsley-multiple="select_file-entity_types" checked="checked"> <small style="color: #fff;">Limit results to visible map area</small>
+      </label>
+    </div>
+    <div class="pull-left" style="color: #fff; padding: 12px 10px 14px 20px; margin-left: 10px; border-left: solid 1px #345bb7;">
+      <strong>5</strong> records showing
+    </div>
+    <div class="hidden btn-group btn-group-sm pull-right" role="toolbar" style="padding-right: 20px; padding-top: 8px;">
+      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-map2.png" style="width: 22px; padding: 4px;"></button>
+      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-split-green.png" style="width: 22px; padding: 4px;"></button>
+      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"></button>
+    </div>
+  </div>
   <div class="row">
     <!-- Start overview map  -->
-    <div class="col-sm-12 map">
+    <div class="col-md-12 map">
       {% leaflet_map "project-map" callback="locations_map_init" %}
+    </div>
+    <!-- / end overview map -->
+  </div>
+</div>
+<div id="test" class="container sidebar sidebar-right content-single" style="overflow-y: unset; overflow: visible;">
+  <div class="row">  
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="detail" style="overflow-y: hidden; margin-bottom: 400px; box-shadow: 0 0 0;">
+        <div class="top-bar">
+          <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a style="font-size: 16px;" href="#overview" aria-controls="overview" role="tab" data-toggle="tab">By Location</a></li>
+              <li role="presentation"><a href="#relationships" style="font-size: 16px;" aria-controls="relationships" role="tab" data-toggle="tab">By Party</a></li>
+            </ul>
+        </div>
+        <section>
+          <div class="page-title">
+            <div class="tab-content">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <p style="margin: 0;"><small>Showing 1-5 of 5</small></p>
+                <table class="table table-hover datatable dataTable no-footer" data-paging-type="simple" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                  <tbody>
+                    <tr id="apartment">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color: #41b6c4;"></span>
+                        <div class="pull-left"><h4><a href="/organizations/habitat-for-humanity/projects/pekapuran-laut/records/locations/qsm4iz7tz3juue8wyrbk3z7y/">Apartment</a> <span class="size">456 m<sup>2</sup></span></h4>
+                        <p class="small">Leasehold &middot; Chief Sonieky</p></div>
+                      </td>
+                    </tr>
+                    <tr id="building1">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color:#a1dab4;"></span>
+                        <div class="pull-left"><h4><a href="">Building</a> <span class="size">856 m<sup>2</sup></span></h4>
+                        <p class="small">Longterm Leasehold &middot; Congregation de Santos</p></div>
+                      </td>
+                    </tr>
+                    <tr id="building2">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color:#a1dab4;"></span>
+                        <div class="pull-left"><h4><a href="">Building</a> <span class="size">7.3 ha<sup>2</sup></span></h4>
+                        <p class="small">Leasehold &middot; Chief Sonieky</p></div>
+                      </td>
+                    </tr>
+                    <tr id="parcel">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color: #2c7fb8;"></span>
+                        <div class="pull-left"><h4><a href="">Parcel</a> <span class="size">5.9 ha</span></h4>
+                        <p class="small">Hunting/Fishing/Harvest Rights &middot; Congregation de Santos</p></div>
+                      </td>
+                    </tr>
+                    <tr id="misc">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color: #253494;"></span>
+                        <div class="pull-left"><h4><a href="">Miscellaneous</a> <span class="size">1m<sup>2</sup></span></h4></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="margin-bottom: 4px;"><small>Showing 1-5 of 5</small></p>
+              </div>
+              <!-- /location index -->
+          </div>
+        </section>
+        <div class="top-bar" style="margin-top: 400px;">
+          <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation"><a style="font-size: 16px;" href="#overview" aria-controls="overview" role="tab" data-toggle="tab">By Location</a></li>
+              <li role="presentation" class="active"><a style="font-size: 16px;" href="#relationships" style="color: #555;" aria-controls="relationships" role="tab" data-toggle="tab">By Party</a></li>
+            </ul>
+        </div>
+        <section>
+          <div class="page-title">
+            <div class="tab-content">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <p style="margin-bottom: 4px;"><small>Showing 1-5 of 5</small></p>
+                <table class="table table-hover no-footer" data-paging-type="simple" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                  <tbody>
+                    <tr class="title">
+                      <td>
+                        <h4><a>Chief Sonieky<span class="size">Individual</span></a><span class="badge pull-right" style="padding: 3px 7px;">2</span></h4>
+
+                      </td>
+                    </tr>
+                    <tr id="apartment">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color: #41b6c4;"></span>
+                        <div class="pull-left"><h4><a href="/organizations/habitat-for-humanity/projects/pekapuran-laut/records/locations/qsm4iz7tz3juue8wyrbk3z7y/">Apartment</a> <span class="size">456 m<sup>2</sup></span></h4>
+                        <p class="small">Leasehold &middot; Chief Sonieky</p></div>
+                      </td>
+                    </tr>
+                    <tr id="building2">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color:#a1dab4;"></span>
+                        <div class="pull-left"><h4><a href="">Building</a> <span class="size">7.3 ha<sup>2</sup></span></h4>
+                        <p class="small">Leasehold &middot; Chief Sonieky</p></div>
+                      </td>
+                    </tr>
+                    <tr class="title">
+                      <td>
+                        <h4><a>Congregation de Santos <span class="size">Group</span></a><span class="badge pull-right" style="padding: 3px 7px;">2</span></h4>
+                        
+                      </td>
+                    </tr>
+                    <tr id="building1">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color:#a1dab4;"></span>
+                        <div class="pull-left"><h4><a href="">Building</a> <span class="size">856 m<sup>2</sup></span></h4>
+                        <p class="small">Longterm Leasehold &middot; Congregation de Santos</p></div>
+                      </td>
+                    </tr>
+
+                    <tr id="parcel">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color: #2c7fb8;"></span>
+                        <div class="pull-left"><h4><a href="">Parcel</a> <span class="size">5.9 ha</span></h4>
+                        <p class="small">Hunting/Fishing/Harvest Rights &middot; Congregation de Santos</p></div>
+                      </td>
+                    </tr>
+                    <tr class="title">
+                      <td>
+                        <h4>No party<span class="badge pull-right" style="padding: 3px 7px;">1</span></h4>
+
+                      </td>
+                    </tr>
+                    <tr id="misc">
+                      <td>
+                        <span class="glyphicon glyphicon-map-marker" style="color: #253494;"></span>
+                        <div class="pull-left"><h4><a href="">Miscellaneous</a> <span class="size">1m<sup>2</sup></span></h4></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style=""><small>Showing 1-5 of 5</small></p>
+              </div>
+              <!-- /location index -->
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 </div>
+<div class="toggler" data-whois="toggler"> <span class="glyphicon glyphicon-chevron-right">&nbsp;</span></div>
+
 
 {% endblock %}

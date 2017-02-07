@@ -95,8 +95,8 @@
 #organization-single .page-header { // navy band on pages for single project or organization
   display: table;
   background: $brand-darkblue;
-  height: 110px;
-  min-height: 110px;
+  height: 80px;
+  min-height: 80px;
   border-bottom: solid 1px #fff;
   margin: 0;
   padding-top: 0;
@@ -119,6 +119,9 @@
       display: table-cell;
       vertical-align: middle;  
     }
+    .back-link {
+      width: 60px;
+    }
     .index-link {
       padding: 4px 10px;
       margin-right: 10px;
@@ -137,11 +140,12 @@
       padding-left: 24px;
       display: table-cell;
       vertical-align: middle;
+      padding-left: 24px;
     }
     .top-btn {
       vertical-align: middle;
       .btn-add {
-        margin-right: 14px;
+        margin-right: 24px;
       }
     }
   }
@@ -243,6 +247,10 @@
   }
 }
 
+#sidebar .nav-sidebar > li.search .icon {
+  height: 36px;
+}
+
 #sidebar {
   li.overview {
     .icon { 
@@ -267,6 +275,11 @@
   li.resources {
     .icon { 
       background-image: url('/static/img/icon-resources.png');
+    }
+  }
+  li.data {
+    .icon { 
+      background-image: url('/static/img/icon-data.png');
     }
   }
   li.reports {
@@ -550,3 +563,197 @@
     }
   }
 }
+
+/* =Map interaction prototype
+-------------------------------------------------------------- */
+
+/*.leaflet-zoom-animated g:nth-of-type(3n) path {
+  fill: red;
+}*/
+.content-single .detail {
+  padding: 0 !important;
+  .top-bar {
+    //background: $brand-darkblue;
+    //height: 40px;
+    padding: 4px 12px 0 12px;
+    a {
+      //color: #fff;
+    }
+  }
+  section {
+    margin: 24px;
+  }
+  table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+    padding: 8px;
+  } 
+  td .glyphicon-map-marker {
+    float: left;
+    display: inline-block;
+    //height: 60px;
+    padding-top: 12px;
+    width: 20px;
+  }
+  .badge {
+    font-weight: normal;
+    font-size: 10px;
+    background: $gray-medium;
+    opacity: 0.8;
+  }
+}
+
+
+#test {
+  position: absolute;
+  top: 49px;
+}
+.sidebar {
+    z-index: 999999;
+    position: fixed;
+    top: -1px;
+    bottom: -1px;
+    padding: 0;
+    width: auto;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.sidebar > .row > .col-xs-12, .sidebar > .row > .col-sm-12, .sidebar > .row > .col-md-12, .sidebar > .row > .col-lg-12 {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    overflow: auto;
+}
+
+.sidebar > .row {
+    margin: 0;
+}
+
+.sidebar {
+    width: auto;
+}
+
+.sidebar.sidebar-right {
+    right: 0;
+    left: 20px;
+}
+
+
+.toggler {
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    width: 20px;
+    height: 48px;
+    position: absolute;
+    top: 47%;
+    cursor: pointer;
+}
+
+.sidebar-right > .toggler {
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-right: 1px solid #fff;
+    -webkit-box-shadow: -1px 0px 8px rgba(0, 0, 0, .175);
+    box-shadow: -1px 0px 8px rgba(0, 0, 0, .175);
+    left: -20px;
+}
+
+.sidebar-right > .toggler > span {
+    margin: 15px 2px;
+}
+
+/*Native BootStrap Hack*/
+.sidebar .list-group-item:last-child, .sidebar .list-group-item:first-child {
+    border-radius: 0;
+}
+
+
+@media (min-width: 400px) {
+    .sidebar {
+        width: 80%;
+    }
+
+    .sidebar.sidebar-left {
+        left: 0;
+        right: auto;
+    }
+
+    .sidebar.sidebar-right {
+        right: 0;
+        left: auto;
+    }
+}
+
+@media (min-width: 528px) {
+    .sidebar {
+        width: 300px;
+    }
+
+    .sidebar.sidebar-left {
+        left: 0;
+        right: auto;
+    }
+
+    .sidebar.sidebar-right {
+        right: 0;
+        left: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        width: 230px;
+    }
+
+    .sidebar.sidebar-left {
+        left: 0;
+        right: auto;
+    }
+
+    .sidebar.sidebar-right {
+        right: 0;
+        left: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        width: 230px;
+    }
+
+    .sidebar.sidebar-left {
+        left: 0;
+        right: auto;
+    }
+
+    .sidebar.sidebar-right {
+        right: 0;
+        left: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .sidebar {
+        width: 230px;
+    }
+
+    .sidebar.sidebar-left {
+        left: 0;
+        right: auto;
+    }
+
+    .sidebar.sidebar-right {
+        right: 0;
+        left: auto;
+    }
+}
+

@@ -28,10 +28,10 @@ $font-family-sans-serif-alt:   'Roboto Condensed', 'Roboto', Helvetica, 'Noto Sa
 
 //== Header
 
-$header-height:                70px;
-$navbar-height:                63px;
-$header-height-home:           100px;
-$navbar-height-home:           93px;
+$header-height:                40px;
+$navbar-height:                35px;
+$header-height-home:           90px;
+$navbar-height-home:           83px;
 
 //== Buttons
 
@@ -62,7 +62,7 @@ $modal-backdrop-bg:              rgba(0, 0, 0, 0.6);
 
 //== Tables
 
-$table-cell-padding:            12px 24px !default;
+$table-cell-padding:            12px !default;
 $table-bg-accent:               #f9f9f9 !default; // Bg for table-striped
 $table-bg-accent:               lighten($table-bg-accent, 25%); // Bg for table-striped
 $table-bg-hover:                #f9fafe !default; // Bg for table-hover

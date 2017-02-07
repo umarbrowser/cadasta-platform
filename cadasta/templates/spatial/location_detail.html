@@ -6,10 +6,43 @@
 
 {% block location_panel %}
 
+<style>
+table.table-location label {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: normal;
+}
+.content-single .detail table > tbody > tr > td {
+    font-size: 13px;
+}
+.top-btn .btn, .table .btn-sm {
+    min-width: 30px !important;
+}
+  tr.title  {
+    border-top: solid 2px #0e305e;
+
+
+  }
+  tr.title h4 {
+    text-transform: uppercase;
+    opacity: .7;
+    font-size: 20px;
+    margin-bottom: 0;
+
+  }
+  tr.title td {
+    padding: 0 8px;
+  }
+  tr.title span {
+    text-transform: none;
+    padding-left: 4px;
+  }
+</style>
 <div class="col-md-4 detail">
+  <div class="top-bar"><a href="{% url 'locations:list' object.organization.slug object.slug %}" class="small">< Return to index</a></div>
   <section>
     <div class="page-title">
-      <h2 class="short"><span>{% trans "Location" %} </span>{{ location.name }}</h2>
+      <h2><span>{% trans "Location" %} </span>{{ location.name }} <span class="size" style="text-transform: lowercase; display: inline-block;">456 m<sup>2</sup></span></h2>
       <div class="top-btn pull-right">
         <!-- Action buttons -->
         <a class="btn btn-default btn-action btn-sm" href="{% url 'locations:edit' object.organization.slug object.slug location.id %}" title="{% trans 'Edit location' %}" aria-label="{% trans 'Edit location' %}"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -18,16 +51,23 @@
     </div>
 
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">{% trans "Overview" %}</a></li>
-      <li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab">{% trans "Relationships" %}</a></li>
-      <li role="presentation"><a  href="#resources" aria-controls="resources" role="tab" data-toggle="tab">{% trans "Resources" %}</a></li>
+      <li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab" style="color: #2e51a3;">{% trans "Overview" %}</a></li>
+      <li role="presentation"><a href="#relationships" aria-controls="relationships" role="tab" data-toggle="tab" style="color: #2e51a3;">{% trans "Relationships" %} <span class="badge">1</span></a></li>
+      <li role="presentation"><a  href="#resources" aria-controls="resources" role="tab" data-toggle="tab" style="color: #2e51a3;">{% trans "Resources" %} <span class="badge">3</span></a></li>
     </ul>
 
     <div class="tab-content">
       <!-- Overview tab -->
       <div role="tabpanel" class="tab-pane active" id="overview">
-        <table class="table table-location">
-          <tbody>
+      <label class="pull-left" style="width: 150px;"><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span><input class="form-control input-sm" style="" placeholder="Search" aria-controls="DataTables_Table_0" type="search"></div></label>
+        <table id="raw" class="table table-location">
+          <thead class="hidden">
+                <tr>
+                  <th>{% trans "Label" %}</th>
+                  <th>{% trans "Response" %}</th>
+                </tr>
+              </thead>
+            <tbody>
             <tr>
               <td class="col-md-4"><label {{ type_labels|safe }}>{% trans "Type" %}</label></td>
               <td class="col-md-8" {{ type_choice_labels|safe }}>{{ location.get_type_display }}</td>
@@ -40,35 +80,52 @@
             {% endfor %}
           </tbody>
         </table>
+        <p style="margin: 0; position: relative;top:-14px;"><small>Showing 1-2 of 2</small></p>
       </div>
       <!-- /overview tab -->
 
       <!-- Relationship tab -->
       <div role="tabpanel" class="tab-pane" id="relationships">
         {% if relationships %}
-          <div class="top-btn pull-right top-add">
+          <label class="pull-left" style="width: 150px;"><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span><input class="form-control input-sm" style="" placeholder="Search" aria-controls="DataTables_Table_0" type="search"></div></label>
+          <div class="top-btn pull-right top-add" style="display: block; margin: 0 0 10px 0;">
             <a class="btn btn-primary btn-sm" href="{% url 'locations:relationship_add' object.organization.slug object.slug location.id %}">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            {% trans "Add" %}
             </a>
           </div>
-          <table class="table table-hover datatable" data-paging-type="simple">
-            <thead>
-              <tr>
-                <th>{% trans "Relationship" %}</th>
-                <th>{% trans "Party" %}</th>
-              </tr>
-            </thead>
+          <table class="table datatable" data-paging-type="simple">
             <tbody>
-              {% for rel in relationships %}
-              {% url 'parties:relationship_detail' object.organization.slug object.slug rel.id as relationship_url %}
-              <tr class="linked" onclick="window.document.location='{{ relationship_url }}';">
-                <td><a href="{{ relationship_url }}" {{ rel.type_labels|safe }}>{{ rel.tenure_type_label }}</a></td>
-                <td><a href="{% url 'parties:detail' object.organization.slug object.slug rel.party.id %}">{{ rel.party.name }}</a></td>
+            <tr class="title">
+                      <td colspan="2">
+                        <h4 style="float: left;">Leasehold</h4><div class="top-btn pull-right">
+        <!-- Action buttons -->
+        <a class="btn btn-default btn-action btn-sm" href="/organizations/habitat-for-humanity/projects/pekapuran-laut/records/locations/qsm4iz7tz3juue8wyrbk3z7y/edit/" title="Edit location" aria-label="Edit location"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default btn-action btn-sm" href="/organizations/habitat-for-humanity/projects/pekapuran-laut/records/locations/qsm4iz7tz3juue8wyrbk3z7y/delete/" title="Delete location" aria-label="Delete location"><span class="glyphicon glyphicon-trash"></span></a>
+      </div>
+                      </td>
+                    </tr>
+              <tr>
+                <td><label>Type</label></td>
+                <td>Leasehold</td>
               </tr>
-              {% endfor %}
+              <tr>
+                <td><label>Party</label></td>
+                <td><a>Chief Sonieky</a></td>
+              </tr>
+              <tr>
+                <td><label>Tenure Notes</label></td>
+                <td><a>---</a></td>
+              </tr>
+              <tr>
+                <td><label>Resources</label></td>
+                <td><div class="pull-right top-add" style="margin-bottom: 6px;">
+            <a class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+            </a></td>
+              </tr>
             </tbody>
           </table>
+          <p style="margin: 0;"><small>Showing 1-1 of 1</small></p>
         {% else %}
           <div>
             <p>{% trans "This location does not have any relationships and is not connected to any parties. To add your first relationship, select the button below." %}</p>
@@ -86,15 +143,50 @@
       <!-- Resources tab -->
       <div role="tabpanel" class="tab-pane" id="resources">
         {% if resource_list %}
-          <div class="top-btn pull-right top-add">
+          <label class="pull-left" style="width: 150px;"><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span><input class="form-control input-sm" style="" placeholder="Search" aria-controls="DataTables_Table_0" type="search"></div></label>
+          <div class="top-btn pull-right top-add" style="display: block; margin: 0 0 10px 0;">
             {% if has_unattached_resources %}
             <a class="btn btn-primary btn-sm" href="{% url 'locations:resource_add' object.organization.slug object.slug location.id %}">
             {% else %}
             <a class="btn btn-primary btn-sm" href="{% url 'locations:resource_new' object.organization.slug object.slug location.id %}">
             {% endif %}
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {% trans "Attach" %}</a>
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
           </div>
-          {% include 'resources/table_sm.html' %}
+          <table class="table table-hover table-condensed datatable" data-paging-type="simple">
+  <thead class="hidden">
+    <tr>
+      <th class="col-md-10">{% trans "Resource" %}</th>
+      <th class="col-md-2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for resource in resource_list %}
+    {% url 'resources:project_detail' project=object.slug organization=object.organization.slug resource=resource.id as resource_url %}
+    <tr class="linked" onclick="window.document.location='{{ resource_url }}';">
+      <td>
+        <div class="resource-60">
+          <img src="{{ resource.thumbnail }}" class="thumb-60">
+        </div>
+        <div class="resource-text">
+          <p>
+            <a href="{{ resource_url }}"><strong>{{ resource.name }}</strong></a>
+            <br><span class="small">{{ resource.original_file }}</span>
+          </p>
+        </div>
+      </td>
+      <td style="padding-right: 0;">
+        <form method="POST" action="{% url 'resources:detach' object.organization.slug object.slug resource.id resource.attachment_id %}?next={{ request.path }}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm pull-right" role="button">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+ <p style="margin: 0; position: relative;top:-14px;"><small>Showing 1-3 of 3</small></p>
         {% else %}
           <div>
             <p>{% trans "This location does not have any attached resources. To attach a resource, select the button below." %}</p>
