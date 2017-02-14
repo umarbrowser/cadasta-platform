@@ -24,7 +24,8 @@ class AllTypesTest(APITestCase, UserTestCase, TestCase):
 
     def setup_models(self):
         self.project = ProjectFactory.create(slug='test-project')
-        self.su = SpatialUnitFactory.create(project=self.project)
+        self.su = SpatialUnitFactory.create(
+            project=self.project, geometry='SRID=4326;POINT(0 0)')
         self.party = PartyFactory.create(project=self.project)
         self.tenure_rel = TenureRelationshipFactory.create(
             spatial_unit=self.su, party=self.party, project=self.project)

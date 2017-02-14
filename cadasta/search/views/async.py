@@ -1,7 +1,14 @@
-import requests
 import json
+import os
+import requests
+import subprocess
+import time
+
+from zipfile import ZipFile
+from urllib.parse import quote as url_quote
 
 from django.conf import settings
+from django.http import HttpResponse
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.template.loader import render_to_string
@@ -16,6 +23,9 @@ from spatial.models import SpatialUnit
 from spatial.choices import TYPE_CHOICES as SPATIAL_TYPE_CHOICES
 from party.models import Party, TenureRelationship, TenureRelationshipType
 from resources.models import Resource
+from ..export.shape import ShapeExporter
+from ..export.xls import XLSExporter
+from ..export.resource import ResourceExporter
 
 api = settings.ES_SCHEME + '://' + settings.ES_HOST + ':' + settings.ES_PORT
 spatial_type_choices = {c[0]: c[1] for c in SPATIAL_TYPE_CHOICES}
@@ -210,3 +220,76 @@ class Search(APIPermissionRequiredMixin, ProjectMixin, APIView):
         """Formats the search result into an HTML snippet."""
         return render_to_string(
             'search/search_result_item.html', {'result': result})
+
+
+class SearchExport(APIPermissionRequiredMixin, ProjectMixin, APIView):
+
+    permission_required = 'project.download'
+
+    def get_perms_objects(self):
+        return [self.get_project()]
+
+    def post(self, request, *args, **kwargs):
+        query = request.data.get('q')
+        if not query:
+            return HttpResponse()
+
+        project = self.get_project()
+        es_dump_path = self.query_es(project.id, request.user.id, query)
+        export_format = request.data.get('type')
+        if export_format == 'shp':
+            exporter = ShapeExporter(project, True)
+            path, mime_type = exporter.make_download(es_dump_path)
+        elif export_format == 'xls':
+            exporter = XLSExporter(project)
+            path, mime_type = exporter.make_download(es_dump_path)
+        elif export_format == 'res':
+            exporter = ResourceExporter(project)
+            path, mime_type = exporter.make_download(es_dump_path)
+        else:  # export_format == 'all'
+            shp_exporter = ShapeExporter(project, False)
+            xls_exporter = XLSExporter(project)
+            res_exporter = ResourceExporter(project)
+            shp_zip_path, _ = shp_exporter.make_download(es_dump_path)
+            xls_path, _ = xls_exporter.make_download(es_dump_path)
+            path, mime_type = res_exporter.make_download(es_dump_path)
+            with ZipFile(path, 'a') as myzip:
+                myzip.write(xls_path, arcname='data.xlsx')
+                myzip.write(shp_zip_path, arcname='data-shp.zip')
+                myzip.close()
+
+        ext = os.path.splitext(path)[1]
+        response = HttpResponse(open(path, 'rb'), content_type=mime_type)
+        response['Content-Disposition'] = ('attachment; filename=' +
+                                           self.get_project().slug + ext)
+        return response
+
+    def query_es(self, project_id, user_id, query):
+        """Run a curl command to ES and dump the results into a temp file."""
+
+        query_dsl = {
+            'query': {
+                'simple_query_string': {
+                    'default_operator': 'and',
+                    'query': query,
+                }
+            },
+            'from': 0,
+            'size': settings.ES_MAX_RESULTS,
+            'sort': {'_score': {'order': 'desc'}},
+        }
+        query_dsl_param = url_quote(json.dumps(query_dsl), safe='')
+        t = round(time.time() * 1000)
+        es_dump_path = os.path.join(
+            settings.MEDIA_ROOT,
+            'temp/{}-{}-{}.esjson'.format(project_id, user_id, t)
+        )
+        subprocess.run([
+            'curl',
+            '-o', es_dump_path,
+            '-XGET',
+            '{}/project-{}/_data/?format=json&source={}'.format(
+                api, project_id, query_dsl_param
+            )
+        ])
+        return es_dump_path
