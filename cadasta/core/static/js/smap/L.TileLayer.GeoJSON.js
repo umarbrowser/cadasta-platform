@@ -75,7 +75,7 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
 
     initialize: function(url, options, geojsonOptions) {
         L.TileLayer.Ajax.prototype.initialize.call(this, url, options);
-        this.geojsonLayer = new L.GeoJSON(null, geojsonOptions);
+        this.geojsonOptions = geojsonOptions;
         this.features = L.deflate({
             minSize: 20,
             markerCluster: true
@@ -85,16 +85,14 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
         this._lazyTiles = new Tile(0, 0, 0, map.maxZoom);
         this._map = map;
         L.TileLayer.Ajax.prototype.onAdd.call(this, map);
-        map.addLayer(this.geojsonLayer);
         map.addLayer(this.features);
     },
     onRemove: function(map) {
-        map.removeLayer(this.geojsonLayer);
         L.TileLayer.Ajax.prototype.onRemove.call(this, map);
         map.removeLayer(this.features);
     },
     _reset: function() {
-        this.geojsonLayer.clearLayers();
+        // this.geojsonLayer.clearLayers();
         this._keyLayers = {};
         this._removeOldClipPaths();
         L.TileLayer.Ajax.prototype._reset.apply(this, arguments);
@@ -202,6 +200,7 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
     addTileData: function(geojson, tilePoint) {
         var features = L.Util.isArray(geojson) ? geojson : geojson.features,
             i, len, feature;
+
         if (features) {
             $('#messages #loading').removeClass('hidden');
             for (i = 0, len = features.length; i < len; i++) {
@@ -221,73 +220,9 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
             return this;
         }
 
-        var options = this.geojsonLayer.options;
+        var geojsonLayer = new L.GeoJSON(geojson, this.geojsonOptions);
+        this.features.addLayer(geojsonLayer);
 
-        if (options.filter && !options.filter(geojson)) {
-            return;
-        }
-
-        var parentLayer = this.geojsonLayer;
-        var incomingLayer = null;
-        if (this.options.unique && typeof(this.options.unique) === 'function') {
-            var key = this.options.unique(geojson);
-
-            // When creating the layer for a unique key,
-            // Force the geojson to be a geometry collection
-            if (!(key in this._keyLayers && geojson.geometry.type !== 'GeometryCollection')) {
-                geojson.geometry = {
-                    type: 'GeometryCollection',
-                    geometries: [geojson.geometry]
-                };
-            }
-
-            // Transform the geojson into a new Layer
-            try {
-                incomingLayer = L.GeoJSON.geometryToLayer(geojson, options.pointToLayer, options.coordsToLatLng);
-            }
-            // Ignore GeoJSON objects that could not be parsed
-            catch (e) {
-                return this;
-            }
-
-            incomingLayer.feature = L.GeoJSON.asFeature(geojson);
-            // Add the incoming Layer to existing key's GeometryCollection
-            if (key in this._keyLayers) {
-                parentLayer = this._keyLayers[key];
-                parentLayer.feature.geometry.geometries.push(geojson.geometry);
-            }
-            // Convert the incoming GeoJSON feature into a new GeometryCollection layer
-            else {
-                this._keyLayers[key] = incomingLayer;
-            }
-        }
-        // Add the incoming geojson feature to the L.GeoJSON Layer
-        else {
-            // Transform the geojson into a new layer
-            try {
-                incomingLayer = L.GeoJSON.geometryToLayer(geojson, options.pointToLayer, options.coordsToLatLng);
-            }
-            // Ignore GeoJSON objects that could not be parsed
-            catch (e) {
-                return this;
-            }
-            incomingLayer.feature = L.GeoJSON.asFeature(geojson);
-        }
-        incomingLayer.defaultOptions = incomingLayer.options;
-
-        this.geojsonLayer.resetStyle(incomingLayer);
-
-        if (options.onEachFeature) {
-            options.onEachFeature(geojson, incomingLayer);
-        }
-        parentLayer.addLayer(incomingLayer);
-        this.features.addLayer(incomingLayer);
-
-        // If options.clipTiles is set and the browser is using SVG
-        // then clip the layer using SVG clipping
-        if (this.options.clipTiles) {
-            this._clipLayerToTileBoundary(incomingLayer, tilePoint);
-        }
         return this;
     },
 
