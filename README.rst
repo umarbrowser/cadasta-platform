@@ -5,10 +5,16 @@ About
 -----
 Welcome to Cadasta – a free platform designed to help you collect, organize, and store information about the land and resource rights of your community. 
 
+.. image:: http://recordit.co/I7n4ZX0ITg
+   :height: 100px
+   :width: 200 px
+   :scale: 50 %
+   :alt: alternate text
+   :align: right
 
-[insert youTube video]
+Cadasta is a suite of tools for providing partners with a way to get boundary lines, ownership/tenant information and much more information stored up in the cloud in a safe and secure way. All data collected in Cadasta is owned by the person who collected and imported it. 
 
-You are welcome to use the platform at https://demo.cadasta.org.  Happy Mapping!
+You are welcome to use the demo platform at https://demo.cadasta.org for playing around and testing.  Happy Mapping!
 
 
 |build-status-image|
