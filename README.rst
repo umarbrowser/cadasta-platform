@@ -1,8 +1,17 @@
-cadasta-platform
-================
+Cadasta Platform :: an Open Source Land Registration System
+===========================================================
+
+# About
+
+Welcome to Cadasta – a free platform designed to help you collect, organize, and store information about the land and resource rights of your community. 
+
+
+[insert youTube video]
+
+
+# Setup
 
 |build-status-image|
-
 
 Install for development
 -----------------------
@@ -77,6 +86,3 @@ Cadasta is grateful for the technical considerations and support provided by:
 - `Opbeat <https://opbeat.com>`_
 
 - `Travis CI <https://travis-ci.com/>`_
-
-
-
