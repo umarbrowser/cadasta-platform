@@ -8,6 +8,8 @@ Welcome to Cadasta – a free platform designed to help you collect, organize, a
 
 [insert youTube video]
 
+You are welcome to use the platform at https://demo.cadasta.org.  Happy Mapping!
+
 
 |build-status-image|
 
