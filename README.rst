@@ -1,21 +1,31 @@
+
+
+
+
+
 Cadasta Platform :: an Open Source Land Registration System
 ===========================================================
 
 About
 -----
-Welcome to Cadasta – a free platform designed to help you collect, organize, and store information about the land and resource rights of your community. 
+Cadasta Foundation harnesses innovative technology to simplify, modernize, and expedite the documentation of land and resource rights around the world.
 
-.. image:: http://recordit.co/I7n4ZX0ITg
-   :height: 100px
-   :width: 200 px
-   :scale: 50 %
-   :alt: alternate text
-   :align: right
+Why?
+One third of the people on the planet, from urban shanty town residents to rural smallholder farmers, have no documented right to the land they rely on. Their undocumented rights to land and resources leave them vulnerable to displacement, marginalizes them, and traps them in poverty. 
+Learn more about how helping these communities document their own land and resource rights can reduce poverty and conflict, support conservation efforts, and spark more inclusive economic growth.
 
+How?
+Cadasta is a free platform designed to help you collect, organize, and store information about the land and resource rights of your community. 
 Cadasta is a suite of tools for providing partners with a way to get boundary lines, ownership/tenant information and much more information stored up in the cloud in a safe and secure way. All data collected in Cadasta is owned by the person who collected and imported it. 
 
-You are welcome to use the demo platform at https://demo.cadasta.org for playing around and testing.  Happy Mapping!
+.. raw:: html
 
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe src="//www.youtube.com/embed/KIdW7sPY9y0" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+    </div>
+
+
+You are welcome to use the demo platform at https://demo.cadasta.org for playing around and testing.  Happy Mapping!
 
 |build-status-image|
 
