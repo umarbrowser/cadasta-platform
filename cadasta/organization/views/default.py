@@ -506,6 +506,7 @@ class ProjectAddWizard(core_mixins.SuperUserCheckMixin,
             self.storage.extra_data['org_is_chosen'] = True
 
         result = self.get_form_step_data(form)
+        print(result)
         if 'details-organization' in result:
             self.storage.extra_data['organization'] = (
                 result['details-organization'])

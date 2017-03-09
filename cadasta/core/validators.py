@@ -1,3 +1,4 @@
+import re
 from django.utils.translation import ugettext as _
 
 from jsonschema import Draft4Validator, FormatChecker
@@ -28,3 +29,15 @@ def validate_json(value, schema):
 
     if message_dict:
         raise JsonValidationError(message_dict)
+
+
+pattern = re.compile(u'.*[<>;\\\/'
+                     u'\U0001F300-\U0001F64F\U0001F680-\U0001F6FF'
+                     u'\u2600-\u26FF\u2700-\u27BF].*')
+
+
+def sanitize_string(value):
+    if not value:
+        return True
+
+    return not pattern.match(value)

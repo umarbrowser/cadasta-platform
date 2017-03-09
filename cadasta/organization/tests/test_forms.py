@@ -177,6 +177,31 @@ class OrganizationTest(UserTestCase, TestCase):
         assert org.name == 'New Name'
         assert org.contacts == []
 
+    def test_field_sanitation(self):
+        data = {
+            'name': '<New Name>',
+            'description': '<New Description>',
+            'contacts-TOTAL_FORMS': 2,
+            'contacts-INITIAL_FORMS': 0,
+            'contacts-MIN_NUM_FORMS': 0,
+            'contacts-MAX_NUM_FORMS': 1000,
+            'contacts-0-name': 'User A',
+            'contacts-0-email': 'user.a@example.com',
+            'contacts-0-tel': '',
+            'contacts-0-remove': 'on',
+            'contacts-1-name': 'User B',
+            'contacts-1-email': '',
+            'contacts-1-tel': '555-5555',
+            'contacts-1-remove': 'on',
+            'contacts-2-name': '',
+            'contacts-2-email': '',
+            'contacts-2-tel': ''
+        }
+        form = forms.OrganizationForm(data)
+        assert form.is_valid() is False
+        assert form.errors.get('name') is not None
+        assert form.errors.get('description') is not None
+
 
 class AddOrganizationMemberFormTest(UserTestCase, TestCase):
 
@@ -575,6 +600,13 @@ class ProjectAddDetailsTest(UserTestCase, TestCase):
         assert len(choices) == 1
         assert choices[0] == (self.org.slug, self.org.name)
 
+    def test_sanitize_string(self):
+        data = self.data.copy()
+        data['name'] = '<Name>'
+        form = forms.ProjectAddDetails(data=data, user=self.user)
+        assert form.is_valid() is False
+        assert form.errors['name']
+
 
 @pytest.mark.usefixtures('make_dirs')
 class ProjectEditDetailsTest(UserTestCase, FileStorageTestCase, TestCase):
@@ -791,6 +823,13 @@ class ProjectEditDetailsTest(UserTestCase, FileStorageTestCase, TestCase):
         form = forms.ProjectEditDetails(instance=self.project, data=data)
         assert not form.is_valid()
         assert "Enter a valid URL." in form.errors['urls']
+
+    def test_sanitize_string(self):
+        data = self.data.copy()
+        data['name'] = '<Name>'
+        form = forms.ProjectEditDetails(instance=self.project, data=data)
+        assert form.is_valid() is False
+        assert form.errors['name']
 
 
 class UpdateProjectRolesTest(UserTestCase, TestCase):
@@ -1133,6 +1172,17 @@ class ContactsFormTest(UserTestCase, TestCase):
         assert 'error-email' in html
         assert 'error-phone' in html
 
+    def test_sanitize_string(self):
+        data = {
+            'contacts-name': '<John>',
+            'contacts-email': 'john@example.com',
+            'contacts-tel': ''
+        }
+        form = forms.ContactsForm(data=data, prefix='contacts')
+        assert form.is_valid() is False
+        html = form.as_table()
+        assert 'error-name' in html
+
 
 @pytest.mark.usefixtures('make_dirs')
 @pytest.mark.usefixtures('clear_temp')
@@ -1340,6 +1390,19 @@ class SelectImportFormTest(UserTestCase, FileStorageTestCase, TestCase):
         assert form.errors.get('entity_types')[0] == (
             'Select at least one data type.'
         )
+
+    def test_sanitize_string(self):
+        valid_file = self.get_file(self.valid_file_type, 'rb')
+        file = SimpleUploadedFile(
+            'test.csv', valid_file, 'text/csv')
+        file_dict = {'file': file}
+        data = self.data.copy()
+        data['name'] = '<name>'
+        form = forms.SelectImportForm(
+            files=file_dict, data=data, project=self.project, user=self.user
+        )
+        assert form.is_valid() is False
+        assert form.errors.get('name') is not None
 
 
 class SelectDefaultsFormTest(UserTestCase, FileStorageTestCase, TestCase):

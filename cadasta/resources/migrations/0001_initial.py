@@ -7,7 +7,6 @@ from django.conf import settings
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
 import django.db.models.deletion
-import resources.validators
 
 
 class Migration(migrations.Migration):
@@ -55,7 +54,7 @@ class Migration(migrations.Migration):
                 ('id', models.CharField(db_index=True, max_length=24)),
                 ('name', models.CharField(max_length=200)),
                 ('description', models.TextField(blank=True, null=True)),
-                ('file', buckets.fields.S3FileField(upload_to='resources', validators=[resources.validators.validate_file_type])),
+                ('file', buckets.fields.S3FileField(upload_to='resources')),
                 ('original_file', models.CharField(max_length=200)),
                 ('file_versions', django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True)),
                 ('mime_type', models.CharField(max_length=50)),
@@ -80,7 +79,7 @@ class Migration(migrations.Migration):
                 ('id', models.CharField(max_length=24, primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=200)),
                 ('description', models.TextField(blank=True, null=True)),
-                ('file', buckets.fields.S3FileField(upload_to='resources', validators=[resources.validators.validate_file_type])),
+                ('file', buckets.fields.S3FileField(upload_to='resources')),
                 ('original_file', models.CharField(max_length=200)),
                 ('file_versions', django.contrib.postgres.fields.jsonb.JSONField(blank=True, null=True)),
                 ('mime_type', models.CharField(max_length=50)),

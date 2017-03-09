@@ -1,9 +1,11 @@
-from django.forms import Form, ModelForm, MultipleChoiceField
+from django.utils.translation import ugettext as _
+from django.forms import Form, ModelForm, MultipleChoiceField, CharField
 from jsonattrs.mixins import template_xlang_labels
 from jsonattrs.forms import form_field_from_name
 from django.contrib.contenttypes.models import ContentType
 from tutelary.models import Role
 
+from core.validators import sanitize_string
 from questionnaires.models import Questionnaire, Question, QuestionOption
 from .mixins import SchemaSelectorMixin
 from .widgets import XLangSelect, XLangSelectMultiple
@@ -174,3 +176,25 @@ class AttributeModelForm(AttributeFormMixin, ModelForm):
         if project_id is not None and hasattr(instance, 'project_id'):
             setattr(instance, 'project_id', project_id)
         return super().save()
+
+
+class SanitizeFieldsForm:
+    def clean(self):
+        cleaned_data = super().clean()
+        for name in self.fields:
+            field = self.fields[name]
+            if (type(field) is not CharField or
+                    (hasattr(self, 'ignore_sanitation') and
+                     name in self.ignore_sanitation)):
+                continue
+
+            value = cleaned_data.get(name)
+
+            if not sanitize_string(value):
+                if name not in self.errors.keys():
+                    self.errors[name] = []
+
+                self.errors[name].append(
+                    _("Input can not contain < > ; \\ / or emojis."))
+
+        return cleaned_data

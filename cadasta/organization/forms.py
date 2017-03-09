@@ -4,7 +4,7 @@ from zipfile import ZipFile
 
 from accounts.models import User
 from buckets.widgets import S3FileUploadWidget
-from core.form_mixins import SuperUserCheck
+from core.form_mixins import SuperUserCheck, SanitizeFieldsForm
 from core.util import slugify
 from django import forms
 from django.conf import settings
@@ -44,7 +44,7 @@ def create_update_or_delete_project_role(project, user, role):
                                    project_id=project).delete()
 
 
-class ContactsForm(forms.Form):
+class ContactsForm(SanitizeFieldsForm, forms.Form):
     name = forms.CharField()
     email = forms.EmailField(required=False)
     tel = forms.CharField(required=False)
@@ -112,7 +112,7 @@ class ContactsForm(forms.Form):
         return self.clean_string(self.cleaned_data['tel'])
 
 
-class OrganizationForm(forms.ModelForm):
+class OrganizationForm(SanitizeFieldsForm, forms.ModelForm):
     urls = pg_forms.SimpleArrayField(
         forms.URLField(required=False),
         required=False,
@@ -124,6 +124,9 @@ class OrganizationForm(forms.ModelForm):
     class Meta:
         model = Organization
         fields = ['name', 'description', 'urls', 'contacts', 'access']
+
+    class Media:
+        js = ('js/file-upload.js', 'js/sanitize.js')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -258,10 +261,11 @@ class ProjectAddExtents(forms.ModelForm):
         fields = ['extent']
 
 
-class ProjectAddDetails(SuperUserCheck, forms.Form):
+class ProjectAddDetails(SanitizeFieldsForm, SuperUserCheck, forms.Form):
+    ignore_sanitation = ('questionnaire', )
 
     class Media:
-        js = ('js/file-upload.js',)
+        js = ('js/file-upload.js', 'js/sanitize.js')
 
     organization = forms.ChoiceField()
     name = forms.CharField(max_length=100)
@@ -322,7 +326,9 @@ class ProjectAddDetails(SuperUserCheck, forms.Form):
         return name
 
 
-class ProjectEditDetails(forms.ModelForm):
+class ProjectEditDetails(SanitizeFieldsForm, forms.ModelForm):
+    ignore_sanitation = ('questionnaire', )
+
     urls = pg_forms.SimpleArrayField(
         forms.URLField(required=False),
         required=False,
@@ -339,7 +345,7 @@ class ProjectEditDetails(forms.ModelForm):
     contacts = org_fields.ContactsField(form=ContactsForm, required=False)
 
     class Media:
-        js = ('js/file-upload.js',)
+        js = ('js/file-upload.js', 'js/sanitize.js')
 
     class Meta:
         model = Project
@@ -503,7 +509,7 @@ class DownloadForm(forms.Form):
         return path, mime
 
 
-class SelectImportForm(forms.Form):
+class SelectImportForm(SanitizeFieldsForm, forms.Form):
     MIME_TYPES = {
         'xls': [
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -516,6 +522,10 @@ class SelectImportForm(forms.Form):
     TYPE_CHOICES = (('xls', 'XLS'), ('shp', 'SHP'),
                     ('csv', 'CSV'))
     ENTITY_TYPE_CHOICES = (('SU', 'Locations'), ('PT', 'Parties'))
+    ignore_sanitation = ('mime_type', )
+
+    class Media:
+        js = ('js/sanitize.js')
 
     name = forms.CharField(required=True, max_length=200)
     type = forms.ChoiceField(

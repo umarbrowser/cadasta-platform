@@ -24,11 +24,12 @@ from .exceptions import InvalidGPXFile
 from .managers import ResourceManager
 from .processors.gpx import GPXProcessor
 from .utils import io, thumbnail
-from .validators import ACCEPTED_TYPES, validate_file_type
 
 content_types = models.Q(app_label='organization', model='project')
 
 GPX_MIME_TYPES = ('application/xml', 'text/xml', 'application/gpx+xml')
+ACCEPTED_TYPES = settings.ICON_LOOKUPS.keys()
+ACCEPTED_TYPES_CHOICES = [(c, c) for c in settings.ICON_LOOKUPS.keys()]
 
 
 @permissioned_model
@@ -38,8 +39,11 @@ class Resource(RandomIDModel):
     file = S3FileField(upload_to='resources', accepted_types=ACCEPTED_TYPES)
     original_file = models.CharField(max_length=200)
     file_versions = JSONField(null=True, blank=True)
-    mime_type = models.CharField(max_length=100,
-                                 validators=[validate_file_type])
+    mime_type = models.CharField(
+        max_length=100,
+        choices=ACCEPTED_TYPES_CHOICES,
+        error_messages={
+            'invalid_choice': _("Files of type %(value)s are not accepted.")})
     archived = models.BooleanField(default=False)
     last_updated = models.DateTimeField(auto_now=True)
     contributor = models.ForeignKey('accounts.User')
