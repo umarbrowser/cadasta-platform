@@ -152,3 +152,17 @@ class SlugModelTest(TestCase):
 
         assert MySlugModel.objects.count() == 101
         assert instance.slug[-4:] == '-100'
+
+    def test_emoji_slug(self):
+        instance = MySlugModel()
+        instance.name = '🍺'
+        instance.save()
+
+        assert instance.slug == 'myslugmodel'
+
+    def test_emoji_slug_with_text(self):
+        instance = MySlugModel()
+        instance.name = 'I need 🍺'
+        instance.save()
+
+        assert instance.slug == 'i-need'

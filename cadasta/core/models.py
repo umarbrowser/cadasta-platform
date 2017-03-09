@@ -35,10 +35,11 @@ class SlugModel:
 
     def save(self, *args, **kwargs):
         max_length = self._meta.get_field('slug').max_length
+
         if not self.slug:
             self.slug = slugify(
                 self.name, max_length=max_length, allow_unicode=True
-            )
+            ) or self.__class__.__name__.lower()
 
         orig_slug = self.slug
 
