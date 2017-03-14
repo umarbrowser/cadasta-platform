@@ -1,8 +1,14 @@
 from buckets.serializers import S3Field
 from rest_framework import serializers
 
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from .validators import validate_questionnaire
 from . import models
+from .managers import create_attrs_schema
+
+
+ATTRIBUTE_GROUPS = settings.ATTRIBUTE_GROUPS
 
 
 def create_questions(questions, context):
@@ -139,6 +145,20 @@ class QuestionGroupSerializer(FindInitialMixin, serializers.ModelSerializer):
         create_groups(initial_data.get('question_groups', []), context)
         create_questions(initial_data.get('questions', []), context)
 
+        attribute_group = validated_data.get('name')
+        for attr_group in ATTRIBUTE_GROUPS.keys():
+            if attribute_group.startswith(attr_group):
+                app_label = ATTRIBUTE_GROUPS[attr_group]['app_label']
+                model = ATTRIBUTE_GROUPS[attr_group]['model']
+                content_type = ContentType.objects.get(
+                    app_label=app_label, model=model)
+                create_attrs_schema(
+                    project=self.context['project'],
+                    dict=validated_data,
+                    content_type=content_type,
+                    default_language=self.context['default_language']
+                )
+
         return group
 
 
@@ -158,7 +178,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
             'version', 'questions', 'question_groups', 'md5_hash'
         )
         read_only_fields = (
-            'id', 'filename', 'title', 'id_string', 'version',
+            'id', 'filename', 'title', 'initial_datawstring', 'version',
             'questions', 'question_groups'
         )
 
@@ -198,7 +218,9 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
                 project=project,
                 **validated_data)
 
-            context = {'questionnaire_id': instance.id}
+            context = {'questionnaire_id': instance.id,
+                       'project': project,
+                       'default_language': instance.default_language or 'en'}
             create_questions(questions, context)
             create_groups(question_groups, context)
 
