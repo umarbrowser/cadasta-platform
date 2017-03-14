@@ -100,6 +100,12 @@ function renderFeatures(map, featuresUrl, options) {
   var geoJson = L.geoJson(null, {
     style: { weight: 2 },
     onEachFeature: function(feature, layer) {
+      //alert(feature.properties.type);
+      name = feature.properties.type;
+      $('#locations-index').append('<li data-value="' + name + '">'+name+'</li>');
+      layer._leaflet_id = name;
+      
+
       if (options.trans) {
         layer.bindPopup("<div class=\"text-wrap\">" +
                       "<h2><span>Location</span>" +

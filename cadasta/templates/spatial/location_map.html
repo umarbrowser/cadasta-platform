@@ -60,10 +60,17 @@
 
 <div class="col-md-12 content-single">
   <div class="row">
-    <!-- Start overview map  -->
-    <div class="col-sm-12 map">
+    <!-- Overview map  -->
+    <div class="col-md-8 map">
       {% leaflet_map "project-map" callback="locations_map_init" %}
     </div>
+    <!-- /overview map -->
+    <!-- Right panel  -->
+    <div class="col-md-4 detail">
+      Locations list
+      <ul id="locations-index"></ul>
+    </div>
+    <!-- /right panel -->   
   </div>
 </div>
 
