@@ -100,11 +100,13 @@ function renderFeatures(map, featuresUrl, options) {
   var geoJson = L.geoJson(null, {
     style: { weight: 2 },
     onEachFeature: function(feature, layer) {
-      //alert(feature.properties.type);
-      name = feature.properties.type;
-      $('#locations-index').append('<li data-value="' + name + '">'+name+'</li>');
+      name = feature.id;
+      $('#locations-index').append('<li data-value="' + name + '"><a href="' + feature.properties.url + '">' + feature.properties.type + '</a></li>');
       layer._leaflet_id = name;
-      
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+      });
 
       if (options.trans) {
         layer.bindPopup("<div class=\"text-wrap\">" +
@@ -114,6 +116,19 @@ function renderFeatures(map, featuresUrl, options) {
                       "</div>");  
       }
     }
+  });
+
+  var hovered_id, layer;
+
+  $('#locations-index li').on('mouseenter', function(e){
+    hovered_id = $(e.target).data('value');
+        console.log(hovered_id);
+    layer = geojson.getLayer(hovered_id); //your feature id here
+  alert(hovered_id);
+  alert(layer);
+    layer.setStyle(highlightStyle);
+  }).on('mouseout', function(e){
+    geojson.resetStyle(layer);
   });
 
   var markers = L.Deflate({minSize: 20, layerGroup: geoJson});
@@ -126,9 +141,45 @@ function renderFeatures(map, featuresUrl, options) {
   } else if (projectBounds) {
     map.fitBounds(projectBounds);
   }
+  
   loadFeatures(featuresUrl);
   map.on('zoomend', locationToFront);
   map.on('dragend', locationToFront);
+
+}
+
+// for index and map highlighting
+var highlightStyle = {
+  weight: 5,
+  color: 'red',
+  dashArray: '',
+  fillOpacity: 0.7
+}
+
+var normalStyle = {
+  weight: 2,
+  opacity: 1,
+  color: 'lime',
+  fillOpacity: 0.25
+}
+
+function highlightFeature(e) {
+  var layer = e.target;
+  layer.setStyle(highlightStyle);
+}
+
+function resetHighlight(e) {
+  geojson.resetStyle(e.target);
+}
+
+function style(feature) {
+  return {
+      fillColor: 'green',
+      weight: 2,
+      opacity: 1,
+      color: 'gray',
+      fillOpacity: 0.25
+  };
 }
 
 function switch_layer_controls(map, options){
