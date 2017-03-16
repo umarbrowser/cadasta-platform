@@ -130,21 +130,21 @@
 <!-- Sidebar -->
 <div id="sidebar" class="{% block left-nav %}{% endblock %}">
   <ul class="nav nav-sidebar">
-    <li class="search hidden">
+    <li class="search">
+      <a href="{% url 'organization:project-dashboard' object.organization.slug object.slug %}">
+        <span class="icon"></span>
+        <span class="title">{% trans "Search" %}</span>
+      </a>
+    </li><!--
+    <li class="search">
       <a href="#">
         <span class="icon search"></span>
       </a>
-    </li><!--
+    </li>
     --><li class="overview">
       <a href="{% url 'organization:project-dashboard' object.organization.slug object.slug %}">
         <span class="icon overview"></span>
         <span class="title">{% trans "Dashboard" %}</span>
-      </a>
-    </li><!-- needed to eliminate spacing issue on horizontal menus
-    --><li class="overview">
-      <a href="{% url 'organization:project-dashboard' object.organization.slug object.slug %}">
-        <span class="icon"></span>
-        <span class="title">{% trans "Search" %}</span>
       </a>
     </li><!--
     --><li class="map">
@@ -162,7 +162,7 @@
     --><li class="resources">
       <a href="{% url 'resources:project_list' object.organization.slug object.slug %}">
         <span class="icon resources"></span>
-        <span class="title">{% trans "Resources" %}</span>
+        <span class="title">{% trans "Documents" %}</span>
       </a>
     </li><!--
     --><li class="data">

@@ -3937,7 +3937,7 @@ body.tinted-bg {
 header {
   z-index: 1000;
   position: relative;
-  height: 40px;
+  height: 50px;
   background-color: #2e51a3;
   -webkit-box-shadow: 0 1px 4px rgba(31, 54, 79, 0.2);
   -moz-box-shadow: 0 1px 4px rgba(31, 54, 79, 0.2);
@@ -3946,7 +3946,7 @@ header {
     top: 0; }
   header #logo {
     display: inline-block;
-    line-height: 40px;
+    line-height: 50px;
     font-size: 22px;
     margin: 0 auto;
     padding: 0; }
@@ -3956,7 +3956,7 @@ header {
   header .nav {
     display: inline-block;
     float: right;
-    height: 35px; }
+    height: 45px; }
     header .nav ul.list-inline {
       margin-bottom: 0; }
       header .nav ul.list-inline > li {
@@ -4017,8 +4017,8 @@ header {
             color: #345bb7;
             background-color: #fff; }
         header .nav ul.list-inline > li a {
-          line-height: 35px;
-          height: 35px;
+          line-height: 45px;
+          height: 45px;
           color: #d9dadb;
           padding-left: 24px;
           padding-right: 24px;
@@ -4030,8 +4030,8 @@ header {
   header .btn-help {
     border-radius: 0;
     padding-top: 18px;
-    min-width: 40px;
-    height: 40px;
+    min-width: 50px;
+    height: 50px;
     border: none;
     font-size: 13px;
     color: #eeeeee;
@@ -4121,8 +4121,8 @@ header {
       height: 32px; }
   header .btn-hamburger > a {
     display: block;
-    min-width: 40px;
-    height: 40px;
+    min-width: 50px;
+    height: 50px;
     border: none;
     text-align: center;
     padding-top: 24px;
@@ -4309,7 +4309,7 @@ header {
   border-left: solid 1px #345bb7; }
 
 .reg-links div.divider {
-  height: 40px;
+  height: 50px;
   min-width: 22px; }
 
 .reg-links .dropdown-menu {
@@ -4326,7 +4326,7 @@ header {
   min-width: 224px;
   min-width: 160px;
   max-width: 300px;
-  height: 40px;
+  height: 50px;
   border: none;
   font-size: 13px;
   color: #eeeeee;
@@ -4424,7 +4424,10 @@ header {
     margin-bottom: 0;
     margin-right: 14px;
     background-color: transparent;
-    display: none; }
+    padding: 0; }
+    .reg-links .btn-user .thumbnail.avatar {
+      height: 24px;
+      width: 24px; }
 
 .reg-links .open .btn-user {
   color: #fff;
@@ -4778,7 +4781,6 @@ div.org-logo {
     margin: 0 auto;
     background: #fff; }
   #organization-single .detail {
-    display: table-footer-group;
     box-shadow: none; }
     #organization-single .detail section {
       padding: 20px; } }
@@ -4882,9 +4884,9 @@ ul.resource-actions > li {
     .page-title h1.short, .page-title h2.short {
       width: 50%; }
     .page-title h1 .org-name, .page-title h2 .org-name {
-      font-size: 16px;
+      font-size: 14px;
       display: block;
-      padding-bottom: 2px;
+      padding-bottom: 0;
       text-transform: uppercase; }
     .page-title h1 a, .page-title h2 a {
       color: #a3b7e5; }
@@ -4927,7 +4929,7 @@ ul.resource-actions > li {
   padding-top: 0;
   padding-bottom: 0;
   position: fixed;
-  top: 40px;
+  top: 50px;
   z-index: 999; }
   #project-single .page-header div > a,
   #organization-single .page-header div > a {
@@ -5079,10 +5081,7 @@ ul.resource-actions > li {
     #project-single .page-header .page-title h1, #project-single .page-header .page-title h2,
     #organization-single .page-header .page-title h1,
     #organization-single .page-header .page-title h2 {
-<<<<<<< HEAD
       padding-left: 24px;
-=======
->>>>>>> c8321e1... header changes from language dd
       display: table-cell;
       vertical-align: middle;
       padding-left: 24px; }
@@ -5201,7 +5200,6 @@ ul.resource-actions > li {
             background-color: #fff; }
           #sidebar .nav-sidebar > li a:focus .icon, #sidebar .nav-sidebar > li a:hover .icon {
             background-position: -48px 0; }
-<<<<<<< HEAD
         #sidebar .nav-sidebar > li a .icon {
           margin: 0 auto;
           height: 48px;
@@ -5213,30 +5211,9 @@ ul.resource-actions > li {
           display: block;
           position: relative;
           margin: 0;
-          font-size: 11px;
+          font-size: 10px;
           font-weight: 500;
           text-transform: uppercase; }
-=======
-      #sidebar .nav-sidebar > li .icon {
-        margin: 0 auto;
-        height: 48px;
-        width: 48px;
-        position: relative;
-        background-position: 0 0;
-        display: block; }
-      #sidebar .nav-sidebar > li .title {
-        display: block;
-        position: relative;
-        margin: 0;
-        font-size: 10px;
-        font-weight: 500;
-        text-transform: uppercase;
-        white-space: nowrap;
-        overflow-x: hidden; }
->>>>>>> c8321e1... header changes from language dd
-
-#sidebar .nav-sidebar > li.search .icon {
-  height: 36px; }
 
 #sidebar li.overview .icon {
   background-image: url("/static/img/icon-overview.png"); }
@@ -5729,6 +5706,15 @@ label.required:after {
   background: #fff url("/static/img/cross.png") calc(100% - 8px) 50% no-repeat;
   padding-right: 36px; }
 
+.input-group-btn:last-child > .btn {
+  border: 1px solid #ccc; }
+
+.has-error .input-group-btn .btn,
+.has-warning .input-group-btn .btn {
+  color: #a94442;
+  border-color: #a94442;
+  background-color: #f2dede; }
+
 .has-success select,
 .has-error select {
   background-position: calc(100% - 20px) 50%; }
@@ -6084,7 +6070,7 @@ body.tinted-bg #page-content {
 #dashboard #page-content,
 #project-wizard.page #page-content,
 #registration #page-content {
-  top: 40px; }
+  top: 50px; }
 
 @media (max-width: 1199px) {
   #projects #page-content,

@@ -210,7 +210,12 @@ header {
       margin-bottom: 0;
       margin-right: 14px;
       background-color: transparent;
-      display: none; // beta
+      padding: 0;
+      //display: none; // beta
+      &.avatar {
+        height: 24px;
+        width: 24px;
+      }
     }
   }
   .open .btn-user { // menu is open
