@@ -48,9 +48,18 @@
                 </span>
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu dropdown-menu-right">
                 <li>
                   <a href="{% url 'account:profile' %}">{% trans "Edit profile" %}</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{% url 'organization:dashboard' slug=object.organization.slug %}" class="org-name">{{ object.organization.name }}</a>
+                </li>
+                <li class="organizations"><a href="{% url 'organization:list' %}">{% trans "View all  organizations" %}</a></li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{% url 'account_logout' %}">{% trans "Manage platform users" %}</a>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
@@ -67,24 +76,57 @@
             </div>
             {% endif %}
           </div>
+          <div class="reg-links pull-right">
+            <!-- Organization menu -->
+            <div class="btn-group divider" role="group">
+              <button type="button" class="btn btn-user dropdown-toggle" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+                <img src="/static/img/logo-habitat_for_humanity-sm.png" class="avatar thumbnail">
+                <span class="visible-xs-inline glyphicon glyphicon-user"></span>
+                <span class="username visible-sm-inline visible-md-inline visible-lg-inline">
+                  {{ object.organization.name }}
+                </span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  <a href="{% url 'account:profile' %}">{% trans "Edit profile" %}</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{% url 'organization:dashboard' slug=object.organization.slug %}" class="org-name">{{ object.organization.name }}</a>
+                </li>
+                <li class="organizations"><a href="{% url 'organization:list' %}">{% trans "View all  organizations" %}</a></li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{% url 'account_logout' %}">{% trans "Create organization" %}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
           <!-- Help -->
           <a class="btn btn-help pull-right visible-md-inline visible-lg-inline" aria-label="Help" id="help-link" href="#" style="padding-top: 16px;">
             <span class="glyphicon glyphicon-question-sign"></span>
           </a>
-          <nav class="nav" role="navigation">
+          <nav class="nav hidden" role="navigation">
             <ul class="list-inline visible-md-block visible-lg-block">
-              <li class="projects">
+              <li class="dashboard">
                 <a href="{% url 'project:list' %}">
-                  {% trans "Projects" %}
+                  {% trans "My Dashboard" %}
                 </a>
               </li><!--
-              --><li class="organizations">
+              --><li class="projects">
+                <a href="{% url 'project:list' %}">
+                  {% trans "Habitat for Humanity" %}
+                </a>
+              </li><!--
+              --><li class="organizations hidden">
                 <a href="{% url 'organization:list' %}">
                   {% trans "Organizations" %}
                 </a>
               </li>
               {% if is_superuser %}
-              <li class="users">
+              <li class="users hidden">
                 <a href="{% url 'user:list' %}">
                   {% trans "Users" %}
                 </a>
