@@ -1,14 +1,17 @@
+import re
 from buckets.serializers import S3Field
 from rest_framework import serializers
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from jsonattrs.models import Attribute, AttributeType, Schema
 from .validators import validate_questionnaire
+from .managers import fix_labels
 from . import models
-from .managers import create_attrs_schema
 
 
 ATTRIBUTE_GROUPS = settings.ATTRIBUTE_GROUPS
+QUESTION_TYPES = dict(models.Question.TYPE_CHOICES)
 
 
 def create_questions(questions, context):
@@ -139,25 +142,61 @@ class QuestionGroupSerializer(FindInitialMixin, serializers.ModelSerializer):
 
         context = {
             'question_group_id': group.id,
-            'questionnaire_id': self.context.get('questionnaire_id')
+            'questionnaire_id': self.context.get('questionnaire_id'),
+            'project': self.context.get('project')
         }
 
         create_groups(initial_data.get('question_groups', []), context)
         create_questions(initial_data.get('questions', []), context)
 
+        project = self.context['project']
         attribute_group = validated_data.get('name')
         for attr_group in ATTRIBUTE_GROUPS.keys():
             if attribute_group.startswith(attr_group):
+                selectors = (project.organization.pk, project.pk,
+                             project.current_questionnaire)
+
+                relevant = initial_data.get('relevant', None)
+                if relevant:
+                    clauses = relevant.split('=')
+                    selector = re.sub("'", '', clauses[1])
+                    selectors += (selector,)
+
                 app_label = ATTRIBUTE_GROUPS[attr_group]['app_label']
                 model = ATTRIBUTE_GROUPS[attr_group]['model']
-                content_type = ContentType.objects.get(
-                    app_label=app_label, model=model)
-                create_attrs_schema(
-                    project=self.context['project'],
-                    dict=validated_data,
+                content_type = ContentType.objects.get(app_label=app_label,
+                                                       model=model)
+
+                schema_obj = Schema.objects.create(
                     content_type=content_type,
-                    default_language=self.context['default_language']
-                )
+                    selectors=selectors,
+                    default_language=self.context['default_language'])
+
+                for field in initial_data.get('questions', []):
+                    if field['type'] == 'S1':
+                        field_type = 'select_one'
+                    elif field['type'] == 'SM':
+                        field_type = 'select_multiple'
+                    else:
+                        field_type = QUESTION_TYPES.get(field['type'])
+
+                    attr_type = AttributeType.objects.get(name=field_type)
+                    choices = [c.get('name') for c in field.get('options', [])]
+                    choice_labels = [fix_labels(c.get('label'))
+                                     for c in field.get('options', [])]
+
+                    Attribute.objects.create(
+                        schema=schema_obj,
+                        name=field['name'],
+                        long_name=field.get('label', field['name']),
+                        attr_type=attr_type,
+                        index=field['index'],
+                        choices=choices,
+                        choice_labels=choice_labels if choice_labels else None,
+                        default=field.get('default') or '',
+                        required=field.get('required', False),
+                        omit=field.get('omit', False),
+                    )
 
         return group
 
@@ -217,15 +256,14 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
             instance = models.Questionnaire.objects.create(
                 project=project,
                 **validated_data)
+            project.current_questionnaire = instance.id
+            project.save()
 
             context = {'questionnaire_id': instance.id,
                        'project': project,
                        'default_language': instance.default_language or 'en'}
             create_questions(questions, context)
             create_groups(question_groups, context)
-
-            project.current_questionnaire = instance.id
-            project.save()
 
             return instance
 

@@ -1,11 +1,11 @@
 import pytest
 from django.test import TestCase
 from rest_framework.serializers import ValidationError
-
+from jsonattrs.models import Attribute
 from organization.tests.factories import ProjectFactory
 from questionnaires.exceptions import InvalidXLSForm
 from core.tests.utils.files import make_dirs  # noqa
-from core.tests.utils.cases import FileStorageTestCase
+from core.tests.utils.cases import FileStorageTestCase, UserTestCase
 
 from . import factories
 from .. import serializers
@@ -13,7 +13,7 @@ from ..models import Questionnaire, QuestionOption
 
 
 @pytest.mark.usefixtures('make_dirs')
-class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
+class QuestionnaireSerializerTest(UserTestCase, FileStorageTestCase, TestCase):
     def test_deserialize(self):
         form = self.get_form('xls-form')
 
@@ -155,7 +155,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 0
                 },
                 {
                     "id": "uigb9zd9zgmhjewvaf92awru",
@@ -166,7 +167,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 1
                 },
                 {
                     "id": "rw7mt32858cu2w5urbf9z3a4",
@@ -177,7 +179,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 2
                 },
                 {
                     "id": "sgz4peaw5buq7pyjv87fuv6u",
@@ -188,7 +191,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 3
                 },
                 {
                     "id": "h9r973qgscumzh6emkx9jnba",
@@ -199,7 +203,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 4
                 },
                 {
                     "id": "hq5tvivqwnqttaiudk7zz2fu",
@@ -211,6 +216,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "default": None,
                     "hint": None,
                     "relevant": None,
+                    "index": 5,
                     "options": [
                         {
                             "id": "tr8gc2xanrqzq3idfrysk2cn",
@@ -241,7 +247,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 6
                 },
                 {
                     "id": "w4eb66p8c2ctshdkachc26zd",
@@ -252,7 +259,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 7
                 },
                 {
                     "id": "vks2dqjktf2t2in76jv38rdj",
@@ -264,6 +272,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "default": None,
                     "hint": None,
                     "relevant": None,
+                    "index": 8,
                     "options": [
                         {
                             "id": "xq9eumfmxe2h3mk4cibx6az2",
@@ -324,7 +333,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 9
                 },
                 {
                     "id": "v4ydy2ihvd2xfdhiqhwhgfed",
@@ -335,7 +345,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 10
                 },
                 {
                     "id": "x5x4ts8ujbhpkk92s53icrx7",
@@ -346,7 +357,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "constraint": None,
                     "default": None,
                     "hint": None,
-                    "relevant": None
+                    "relevant": None,
+                    "index": 11
                 },
                 {
                     "id": "merrppduxyk6y3fja74pym7p",
@@ -358,6 +370,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "default": None,
                     "hint": None,
                     "relevant": None,
+                    "index": 12,
                     "options": [
                         {
                             "id": "ua22mni8hszcxjjr6brnw25k",
@@ -482,6 +495,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "name": "meta",
                     "label": "Label",
                     "type": 'group',
+                    "index": 13,
                     "questions": [
                         {
                             "id": "8v5znbuyvtyinsdd96ytyrui",
@@ -492,7 +506,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 0
                         }
                     ]
                 },
@@ -511,7 +526,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 0
                         }
                     ]
                 },
@@ -530,7 +546,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 0
                         }
                     ]
                 },
@@ -539,6 +556,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "name": "party_attributes_group",
                     "label": "Group Party Attributes",
                     "type": 'group',
+                    "relevant": "${party_type}='GR'",
                     "questions": [
                         {
                             "id": "xta42t6ye53ujetniebknytw",
@@ -549,7 +567,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 0
                         },
                         {
                             "id": "jzy45gy539k7yfffz8h4vs7g",
@@ -560,7 +579,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 1
                         }
                     ]
                 },
@@ -569,6 +589,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                     "name": "party_attributes_individual",
                     "label": "Individual Party Attributes",
                     "type": 'group',
+                    "relevant": "${party_type}='IN'",
                     "questions": [
                         {
                             "id": "ph3xrdtxkcwacqavg8k8rj3v",
@@ -580,6 +601,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "default": "f",
                             "hint": None,
                             "relevant": None,
+                            "index": 0,
                             "options": [
                                 {
                                     "id": "d465rbsz27bdvk9qtsrpivva",
@@ -605,6 +627,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "default": "no",
                             "hint": "Is homeowner",
                             "relevant": None,
+                            "index": 1,
                             "options": [
                                 {
                                     "id": "i9mveb9cyiq5e2iszadgvx3p",
@@ -629,7 +652,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 2
                         }
                     ]
                 },
@@ -648,7 +672,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 0
                         }
                     ]
                 },
@@ -667,7 +692,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 0
                         },
                         {
                             "id": "36s3imu4h47cps2m64ddcf8h",
@@ -679,6 +705,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "default": "none",
                             "hint": "Quality of parcel geometry",
                             "relevant": None,
+                            "index": 1,
                             "options": [
                                 {
                                     "id": "sa8wd8hx8ipz9r8v6qznh6d9",
@@ -716,12 +743,13 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "id": "mnstx4zzfz4dxyjyxhuqskam",
                             "name": "acquired_how",
                             "label": "How was this location acquired?",
-                            "type": "S1",
+                            "type": "SM",
                             "required": False,
                             "constraint": None,
                             "default": "OT",
                             "hint": None,
                             "relevant": None,
+                            "index": 2,
                             "options": [
                                 {
                                     "id": "efcuuw578hu2d922sgwvwvmg",
@@ -794,7 +822,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": "none",
                             "hint": None,
-                            "relevant": None
+                            "relevant": None,
+                            "index": 3
                         },
                         {
                             "id": "ppckgucjmvt8xtg8tykifvm6",
@@ -805,7 +834,8 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
                             "constraint": None,
                             "default": None,
                             "hint": "Additional Notes",
-                            "relevant": None
+                            "relevant": None,
+                            "index": 4
                         }
                     ]
                 }
@@ -824,6 +854,7 @@ class QuestionnaireSerializerTest(FileStorageTestCase, TestCase):
         questionnaire = Questionnaire.objects.first()
         assert questionnaire.questions.count() == 27
         assert questionnaire.question_groups.count() == 7
+        assert Attribute.objects.count() == 13
 
 
 class QuestionGroupSerializerTest(TestCase):
@@ -896,7 +927,8 @@ class QuestionGroupSerializerTest(TestCase):
         }
         serializer = serializers.QuestionGroupSerializer(
             data=data,
-            context={'questionnaire_id': questionnaire.id})
+            context={'questionnaire_id': questionnaire.id,
+                     'project': questionnaire.project})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         assert questionnaire.question_groups.count() == 1
@@ -916,7 +948,8 @@ class QuestionGroupSerializerTest(TestCase):
         }
         serializer = serializers.QuestionGroupSerializer(
             data=data,
-            context={'questionnaire_id': questionnaire.id})
+            context={'questionnaire_id': questionnaire.id,
+                     'project': questionnaire.project})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         assert questionnaire.question_groups.count() == 2
@@ -950,7 +983,8 @@ class QuestionGroupSerializerTest(TestCase):
         serializer = serializers.QuestionGroupSerializer(
             data=data,
             many=True,
-            context={'questionnaire_id': questionnaire.id})
+            context={'questionnaire_id': questionnaire.id,
+                     'project': questionnaire.project})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         assert questionnaire.question_groups.count() == 2
