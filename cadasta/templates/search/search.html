@@ -58,9 +58,11 @@
               </ul>
             </div>
             <div id="results" class="hidden col-md-9">
+              {% if is_allowed_download %}
               <a class="btn btn-default btn-action btn-sm pull-right" href="#search_export_modal" data-toggle="modal">
                 <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> {% trans "Export" %}
               </a>
+              {% endif %}
               <h4>
                 {% blocktrans %}
                 Showing <span id="total-results"></span> result(s) for <strong><span id="query-string"></span></strong>
