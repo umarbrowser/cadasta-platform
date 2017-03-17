@@ -174,7 +174,7 @@ body.tinted-bg #page-content { // for bg image
   margin: 0 auto;
   padding: 0;
   position: absolute;
-  top: 130px;
+  top: 136px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -399,11 +399,12 @@ main.container-fluid {
       //text-transform: uppercase;
       //opacity: 0.8;
       letter-spacing: 0;
-      padding-top: 10px;
+      padding-top: 4px;
       .size {
         font-size: 12px;
         color: $gray-medium;
         font-weight: normal;
+        display: inline-block;
       }
     }
     .glyphicon-globe, .glyphicon-envelope, .glyphicon-earphone { // url and contacts in overview

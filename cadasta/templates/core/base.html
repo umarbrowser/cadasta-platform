@@ -50,13 +50,11 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right">
                 <li>
-                  <a href="{% url 'account:profile' %}">{% trans "Edit profile" %}</a>
+                  <a href="{% url 'account:profile' %}">{% trans "My dashboard" %}</a>
                 </li>
-                <li role="separator" class="divider"></li>
                 <li>
-                  <a href="{% url 'organization:dashboard' slug=object.organization.slug %}" class="org-name">{{ object.organization.name }}</a>
+                  <a href="{% url 'account:profile' %}">{% trans "My profile" %}</a>
                 </li>
-                <li class="organizations"><a href="{% url 'organization:list' %}">{% trans "View all  organizations" %}</a></li>
                 <li role="separator" class="divider"></li>
                 <li>
                   <a href="{% url 'account_logout' %}">{% trans "Manage platform users" %}</a>
@@ -90,16 +88,18 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-right">
                 <li>
-                  <a href="{% url 'account:profile' %}">{% trans "Edit profile" %}</a>
+                  <a href="{% url 'organization:dashboard' slug=object.organization.slug %}" class="org-name"><img src="/static/img/logo-cadasta-icon.jpg" class="avatar thumbnail" style="display: inline-block; margin-bottom: 0; margin-right: 8px; background-color: transparent; padding: 0; height: 24px; width: 24px;"> Cadasta</a>
+                </li>
+                <li>
+                  <a href="{% url 'organization:dashboard' slug=object.organization.slug %}" class="org-name"><img src="/static/img/logo-habitat_for_humanity-sm.png" class="avatar thumbnail" style="display: inline-block; margin-bottom: 0; margin-right: 8px; background-color: transparent; padding: 0; height: 24px; width: 24px;"> {{ object.organization.name }}</a>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a href="{% url 'organization:dashboard' slug=object.organization.slug %}" class="org-name">{{ object.organization.name }}</a>
+                  <a href="{% url 'account_logout' %}"></span> {% trans "Browse organizations" %}</a>
                 </li>
-                <li class="organizations"><a href="{% url 'organization:list' %}">{% trans "View all  organizations" %}</a></li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a href="{% url 'account_logout' %}">{% trans "Create organization" %}</a>
+                  <a href="{% url 'account_logout' %}"><span class="glyphicon glyphicon-plus"></span> {% trans "Add organization" %}</a>
                 </li>
               </ul>
             </div>
@@ -147,6 +147,11 @@
               </ul>
             </div>
           </nav>
+          <!-- New buttons -->
+          <div class="pull-right hidden" style="margin-right: 20px;">
+            <button type="button" class="btn btn-primary btn-rt btn-sm dropdown-toggle" style="margin-top: 8px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> Add organization</button> <div style="color: #fff; padding-top: 10px; display: inline-block;">or</div>
+            <button type="button" class="btn btn-primary btn-rt btn-sm dropdown-toggle" style="margin-top: 8px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Browse organizations</button>
+          </div>
         </div>
       </header>
       <!-- /.header -->

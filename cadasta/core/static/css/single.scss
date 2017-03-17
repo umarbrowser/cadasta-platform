@@ -95,9 +95,9 @@
 #organization-single .page-header { // navy band on pages for single project or organization
   display: table;
   background: $brand-darkblue;
-  height: 80px;
-  min-height: 80px;
-  border-bottom: solid 1px #fff;
+  height: 86px;
+  min-height: 86px;
+  border-bottom: solid 1px #555;
   margin: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -145,7 +145,7 @@
     .top-btn {
       vertical-align: middle;
       .btn-add {
-        margin-right: 24px;
+        margin-right: 14px;
       }
     }
   }
@@ -584,13 +584,13 @@
     margin: 24px;
   }
   table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
-    padding: 8px;
+    padding: 2px 8px;
   } 
   td .glyphicon-map-marker {
     float: left;
     display: inline-block;
     //height: 60px;
-    padding-top: 12px;
+    padding-top: 6px;
     width: 20px;
   }
   .badge {
@@ -604,7 +604,7 @@
 
 #test {
   position: absolute;
-  top: 49px;
+  top: 41px;
 }
 .sidebar {
     z-index: 999999;

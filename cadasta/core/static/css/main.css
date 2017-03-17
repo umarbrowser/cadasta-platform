@@ -4317,7 +4317,7 @@ header {
   min-width: 160px; }
 
 .reg-links .caret, .reg-links .glyphicon-user {
-  margin-left: 14px;
+  margin-left: 8px;
   color: #6485d3;
   transition: all 0.3s ease 0s; }
 
@@ -4422,7 +4422,7 @@ header {
   .reg-links .btn-user .thumbnail {
     display: inline-block;
     margin-bottom: 0;
-    margin-right: 14px;
+    margin-right: 8px;
     background-color: transparent;
     padding: 0; }
     .reg-links .btn-user .thumbnail.avatar {
@@ -4922,9 +4922,9 @@ ul.resource-actions > li {
 #organization-single .page-header {
   display: table;
   background: #0e305e;
-  height: 80px;
-  min-height: 80px;
-  border-bottom: solid 1px #fff;
+  height: 86px;
+  min-height: 86px;
+  border-bottom: solid 1px #555;
   margin: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -5090,7 +5090,7 @@ ul.resource-actions > li {
       vertical-align: middle; }
       #project-single .page-header .page-title .top-btn .btn-add,
       #organization-single .page-header .page-title .top-btn .btn-add {
-        margin-right: 24px; }
+        margin-right: 14px; }
 
 @media (max-width: 991px) {
   #project-single .page-header,
@@ -5475,11 +5475,11 @@ ul.resource-actions > li {
   .content-single .detail section {
     margin: 24px; }
   .content-single .detail table > tbody > tr > td, .content-single .detail .table > tfoot > tr > th, .content-single .detail .table > tfoot > tr > td {
-    padding: 8px; }
+    padding: 2px 8px; }
   .content-single .detail td .glyphicon-map-marker {
     float: left;
     display: inline-block;
-    padding-top: 12px;
+    padding-top: 6px;
     width: 20px; }
   .content-single .detail .badge {
     font-weight: normal;
@@ -5489,7 +5489,7 @@ ul.resource-actions > li {
 
 #test {
   position: absolute;
-  top: 49px; }
+  top: 41px; }
 
 .sidebar {
   z-index: 999999;
@@ -6059,7 +6059,7 @@ body.tinted-bg #page-content {
   margin: 0 auto;
   padding: 0;
   position: absolute;
-  top: 130px;
+  top: 136px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -6238,11 +6238,12 @@ main.container-fluid {
     .content-single .detail h4 {
       font-family: "Roboto Condensed", "Roboto", Helvetica, "Noto Sans Bengali", sans-serif;
       letter-spacing: 0;
-      padding-top: 10px; }
+      padding-top: 4px; }
       .content-single .detail h4 .size {
         font-size: 12px;
         color: #a6a7a8;
-        font-weight: normal; }
+        font-weight: normal;
+        display: inline-block; }
     .content-single .detail .glyphicon-globe, .content-single .detail .glyphicon-envelope, .content-single .detail .glyphicon-earphone {
       opacity: 0.7;
       padding-right: 12px; }

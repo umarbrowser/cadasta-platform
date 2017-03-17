@@ -151,42 +151,47 @@ $(document).ready(function(){
 {% block content %}
 
 <div class="col-md-12 content-single">
-  <div class="top-search header page-header" style="border-left: solid 1px #fff; position: relative; top: 0; height: 50px; min-height: 50px;">
-    <p class="pull-left" style="font: 16px Roboto Condensed; color: #fff;">Show </p>
-    <div class="form-group col-md-2">
-      <label class="control-label sr-only" for="id_type">Location types</label>
-      <select class="form-control input-sm" id="id_type" name="type">
-        <option value="">all location types</option>
-      </select>
+  <div class="top-search header page-header" style="border-left: solid 1px #555; position: relative; top: 0; height: 40px; min-height: 40px;">
+    <div class="pull-left" style="color: #fff; padding: 4px 16px 0 16px; height: 40px; border-right: solid 1px #555;">
+      <span style="font-weight: bold; font-size: 18px;">15</span> records showing
     </div>
-    <div class="form-group col-md-2">
-      <label class="control-label sr-only" for="id_type">Relationship types</label>
-      <select class="form-control input-sm" id="id_type" name="type">
-        <option value="">all relationship types</option>
-      </select>
+    <div class="pull-left col-md-8" style="color: #fff; padding: 4px 10px 0 10px; margin-left: 10px;">
+      <p class="pull-left" style="font: 16px Roboto Condensed; color: #fff; margin-top: 6px;">View </p>
+      <div class="form-group col-md-3" style="margin-bottom: 2px; padding: 2px 10px;">
+        <label class="control-label sr-only" for="id_type">Location types</label>
+        <select class="form-control input-sm" id="id_type" name="type">
+          <option value="">all location types</option>
+        </select>
+      </div>
+      <p class="pull-left" style="font: 16px Roboto Condensed; color: #fff; margin-top: 6px;"> with </p>
+      <div class="form-group col-md-3" style="margin-bottom: 2px; padding: 2px 10px;">
+        <label class="control-label sr-only" for="id_type">Relationship types</label>
+        <select class="form-control input-sm" id="id_type" name="type">
+          <option value="">all relationship types</option>
+        </select>
+      </div>
+      <p class="pull-left" style="font: 16px Roboto Condensed; color: #fff; margin-top: 6px;"> for </p>
+      <div class="form-group col-md-3" style="margin-bottom: 2px; padding: 2px 10px;">
+        <label class="control-label sr-only" for="id_type">Party names</label>
+        <select class="form-control input-sm" id="id_type" name="type">
+          <option value="">all people</option>
+        </select>
+      </div>
+      <p class="pull-left small" style="color: #a3b7e5; margin-top: 6px; margin-left: 4px;"> <a href="#" style="color: #a3b7e5;">Reset filters</a></p>
     </div>
-    <div class="form-group col-md-2">
-      <label class="control-label sr-only" for="id_type">Party names</label>
-      <select class="form-control input-sm" id="id_type" name="type">
-        <option value="">all people</option>
-      </select>
-    </div>
-    <div class="pull-left">
-      <label class="control-label" for="id_select_file-entity_types_parties" style="position: relative; top: 12px; padding-left: 10px; padding-right: 10px;">
-        <input type="checkbox" id="id_select_file-entity_types_parties" name="select_file-entity_types" type="checkbox" value="PT" data-parsley-multiple="select_file-entity_types" checked="checked"> <small style="color: #fff;">Limit results to visible map area</small>
-      </label>
-    </div>
-    <div class="pull-left" style="color: #fff; padding: 12px 10px 14px 20px; margin-left: 10px; border-left: solid 1px #345bb7;">
-      <strong>5</strong> records showing
-    </div>
-    <div class="btn-group btn-group-sm pull-right" role="toolbar" style="padding-right: 20px; padding-top: 8px;">
-      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-map2-green.png" style="width: 22px; padding: 4px;"></button>
-      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"></button>
+    <div class="btn-group btn-group-sm pull-right" role="toolbar" style="padding-right: 20px; padding-top: 4px;">
+      <button type="button" class="btn btn-sm btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-map2-green.png" style="width: 22px; padding: 4px;"></button>
+      <button type="button" class="btn btn-sm btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"></button>
     </div>
   </div>
   <div class="row">
     <!-- Start overview map  -->
     <div class="col-md-12 map">
+      <div style="position: absolute; top: 30px; right: 30px;">
+        <label class="control-label" for="id_select_file-entity_types_parties" style="position: relative; top: 12px; padding-left: 10px; padding-right: 10px;">
+          <input type="checkbox" id="id_select_file-entity_types_parties" name="select_file-entity_types" type="checkbox" value="PT" data-parsley-multiple="select_file-entity_types" checked="checked"> <small style="color: #fff;">Limit results to visible map area</small>
+        </label>
+      </div>
       {% leaflet_map "project-map" callback="locations_map_init" %}
     </div>
     <!-- / end overview map -->
