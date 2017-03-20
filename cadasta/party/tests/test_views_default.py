@@ -310,7 +310,18 @@ class PartyDetailTest(ViewTestCase, UserTestCase, TestCase):
         assert response.status_code == 200
         assert response.content == self.expected_content
 
-    def test_get_with_with_questionnaire(self):
+    def test_get_with_incomplete_questionnaire(self):
+        questionnaire = q_factories.QuestionnaireFactory.create()
+        self.project.current_questionnaire = questionnaire.id
+        self.project.save()
+
+        user = UserFactory.create()
+        assign_policies(user)
+        response = self.request(user=user)
+        assert response.status_code == 200
+        assert response.content == self.expected_content
+
+    def test_get_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
         self.project.current_questionnaire = questionnaire.id
         self.project.save()
@@ -487,6 +498,17 @@ class PartiesEditTest(ViewTestCase, UserTestCase, TestCase):
         }
 
     def test_get_with_authorized_user(self):
+        user = UserFactory.create()
+        assign_policies(user)
+        response = self.request(user=user)
+        assert response.status_code == 200
+        assert '<div class="form-group party-gr hidden">' in response.content
+
+    def test_get_with_inclomplete_questionnaire(self):
+        questionnaire = q_factories.QuestionnaireFactory.create()
+        self.project.current_questionnaire = questionnaire.id
+        self.project.save()
+
         user = UserFactory.create()
         assign_policies(user)
         response = self.request(user=user)
@@ -1019,7 +1041,18 @@ class PartyRelationshipDetailTest(ViewTestCase, UserTestCase, TestCase):
         assert response.status_code == 200
         assert response.content == self.expected_content
 
-    def test_get_with_with_questionnaire(self):
+    def test_get_with_incomplete_questionnaire(self):
+        questionnaire = q_factories.QuestionnaireFactory.create()
+        self.project.current_questionnaire = questionnaire.id
+        self.project.save()
+
+        user = UserFactory.create()
+        assign_policies(user)
+        response = self.request(user=user)
+        assert response.status_code == 200
+        assert response.content == self.expected_content
+
+    def test_get_with_questionnaire(self):
         questionnaire = q_factories.QuestionnaireFactory.create()
         self.project.current_questionnaire = questionnaire.id
         self.project.save()
