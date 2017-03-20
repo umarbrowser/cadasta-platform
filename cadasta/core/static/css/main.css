@@ -5487,6 +5487,26 @@ ul.resource-actions > li {
     background: #a6a7a8;
     opacity: 0.8; }
 
+.top-filter select {
+  border-color: #0b2548 !important;
+  -webkit-appearance: none;
+  /*Removes default chrome and safari style*/
+  -moz-appearance: none;
+  /* Removes Default Firefox style*/
+  background: rgba(11, 37, 72, 0.8) url("/static/img/dropdown-arrow.png") no-repeat;
+  background-position: right center;
+  /*Position of the background-image*/
+  width: 150px;
+  text-indent: 0.01px;
+  /* Removes default arrow from firefox*/
+  text-overflow: "";
+  /*Removes default arrow from firefox*/
+  color: #fff;
+  display: inline-block;
+  float: left;
+  margin-left: 10px;
+  margin-right: 14px; }
+
 #test {
   position: absolute;
   top: 41px; }
