@@ -2,9 +2,13 @@ import re
 from buckets.serializers import S3Field
 from rest_framework import serializers
 
+from django.db import transaction
+from django.utils.translation import ugettext as _
+from django.db.utils import IntegrityError
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from jsonattrs.models import Attribute, AttributeType, Schema
+from .exceptions import InvalidQuestionnaire
 from .validators import validate_questionnaire
 from .managers import fix_labels
 from . import models
@@ -167,10 +171,20 @@ class QuestionGroupSerializer(FindInitialMixin, serializers.ModelSerializer):
                 content_type = ContentType.objects.get(app_label=app_label,
                                                        model=model)
 
-                schema_obj = Schema.objects.create(
-                    content_type=content_type,
-                    selectors=selectors,
-                    default_language=self.context['default_language'])
+                try:
+                    schema_obj = Schema.objects.create(
+                        content_type=content_type,
+                        selectors=selectors,
+                        default_language=self.context['default_language'])
+                except IntegrityError:
+                    raise InvalidQuestionnaire(
+                        errors=[
+                            _("Unable to assign question group to model "
+                              "entitity. Make sure to add a 'relevant' clause "
+                              "to the question group definition when adding "
+                              "defining more than one question group for a "
+                              "model entity.")
+                        ])
 
                 for field in initial_data.get('questions', []):
                     if field['type'] == 'S1':
@@ -253,19 +267,22 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
         else:
             questions = validated_data.pop('questions', [])
             question_groups = validated_data.pop('question_groups', [])
-            instance = models.Questionnaire.objects.create(
-                project=project,
-                **validated_data)
-            project.current_questionnaire = instance.id
-            project.save()
+            with transaction.atomic():
+                instance = models.Questionnaire.objects.create(
+                    project=project,
+                    **validated_data)
+                project.current_questionnaire = instance.id
+                project.save()
 
-            context = {'questionnaire_id': instance.id,
-                       'project': project,
-                       'default_language': instance.default_language or 'en'}
-            create_questions(questions, context)
-            create_groups(question_groups, context)
+                context = {
+                    'questionnaire_id': instance.id,
+                    'project': project,
+                    'default_language': instance.default_language or 'en'
+                }
+                create_questions(questions, context)
+                create_groups(question_groups, context)
 
-            return instance
+                return instance
 
     def get_questions(self, instance):
         questions = instance.questions.filter(question_group__isnull=True)
