@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page_title %}{% trans "Form detail:" %} {{ pdfform.name }} | {% endblock %}
-{% block left-nav %}questionnaires{% endblock %}
+{% block left-nav %}forms{% endblock %}
 
 {% block content %}
 
@@ -41,7 +41,7 @@
             <li>
                 <form method="get" action="{% url 'questionnaires:pdf_form_download' object.organization.slug object.slug pdfform.id %}">
                 {% csrf_token %}
-                 <button class="btn btn-primary btn-block" type="submit">{% trans "Generate PDF Form" %}</button>
+                 <button class="btn btn-primary" type="submit">{% trans "Generate PDF Form" %}</button>
                 </form>
              </li>
             {% endif %}

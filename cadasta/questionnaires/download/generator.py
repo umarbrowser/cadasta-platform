@@ -3,6 +3,10 @@ from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
 import logging
 
+EXCLUDE_GEO_FIELDS = [
+    'geo_type', 'location_geoshape', 'location_geotrace', 'location_geometry'
+]
+
 
 class PDFGenerator():
     def __init__(self, project, pdfform):
@@ -32,6 +36,8 @@ class PDFGenerator():
                                                 template_questions_list,
                                             'question_groups_list':
                                                 template_question_groups_list,
+                                            'exclude_geo_fields':
+                                                EXCLUDE_GEO_FIELDS,
                                             'pdfform': self.pdfform})
             html = HTML(string=html_string, base_url=absolute_uri)
             pdf = html.write_pdf(stylesheets=[
