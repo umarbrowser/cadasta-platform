@@ -75,30 +75,37 @@
 {% block content %}
 
 <div class="col-sm-12 content-single">
-  <div class="top-search header page-header" style="border-left: solid 1px #fff; position: relative; top: 0; height: 50px; min-height: 50px; padding-top: 8px;">
-    <label class="pull-left" style="width: 15%;"><div class="input-group" style="padding: 0 10px 0 20px;"><span class="input-group-addon" style="padding: 2px 12px;
-font-size: 13px;" ><span class="glyphicon glyphicon-search" style="font-size: 12px;"></span></span><input class="form-control input-sm" style="" placeholder="Search records" aria-controls="DataTables_Table_0" type="search"></div></label>
-    <div class="pull-left" style="padding-right: 10px;">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 80px;">
-          Filter <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
+  <div class="top-filter header page-header" style="border-left: solid 1px #555; border-bottom: none; position: relative; top: 0; height: 44px; min-height: 44px; font-family: Roboto Condensed;">
+    <div class="pull-left" style="color: #fff; padding: 6px 16px 0 16px; height: 44px; border-right: solid 1px #555;">
+      <span style="font-weight: bold; font-size: 18px;">15</span> records showing
+    </div>
+    <div class="pull-left col-md-8" style="color: #fff; padding: 4px; margin-left: 10px;">
+      <p class="pull-left" style="font: 14px Roboto Condensed; color: #fff; margin-top: 6px; margin-right: 4px;">Filters: </p>
+      <div class="form-group" style="margin-bottom: 2px; padding: 2px 10px 2px 0;">
+        <label class="control-label sr-only" for="id_type">Location types</label>
+        <select class="form-control input-sm" id="id_type" name="type">
+          <option value="">all location types</option>
+        </select>
+        <p class="pull-left hidden" style="font: 14px Roboto Condensed; color: #fff; margin-top: 6px;"> with </p>
+        <label class="control-label sr-only" for="id_type">Relationship types</label>
+        <select class="form-control input-sm" id="id_type" name="type">
+          <option value="">all relationship types</option>
+        </select>
+        <p class="pull-left hidden" style="font: 14px Roboto Condensed; color: #fff; margin-top: 6px;"> for </p>
+        <label class="control-label sr-only" for="id_type">Party names</label>
+        <select class="form-control input-sm" id="id_type" name="type">
+          <option value="">all people</option>
+        </select>
       </div>
+      <p class="pull-left" style="color: #a3b7e5; margin-left: 12px;"> <a href="#" style="color: #a3b7e5;">Reset filters</a></p>
     </div>
-    <div class="pull-left" style="color: #fff; padding: 4px 10px;">
-      <strong>5</strong> records showing
-    </div>
-    <div class="button btn-group btn-group-sm pull-right" role="toolbar" style="padding-right: 20px;">
-      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-map2.png" style="width: 22px; padding: 4px;"></button>
-      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-split-green.png" style="width: 22px; padding: 4px;"></button>
-      <button type="button" class="btn btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"></button>
+    <ul class="nav nav-tabs pull-right" style="margin-bottom: 0; height: 44px; overflow: hidden; border-bottom: 0;" role="tablist">
+      <li role="presentation" class="active"><a style="font-size: 16px; font-family: Roboto Condensed; border-color: #e7e8ea; border-radius: 0; border-bottom-color: transparent; background: #fff; border-top: solid 4px #edaa00; color: #555;" href="#overview" aria-controls="overview" role="tab" data-toggle="tab"><img src="/static/img/icon-map2-green.png" style="width: 22px; padding: 4px;"> Map View</a></li>
+      <li role="presentation"><a href="#relationships" style="font-size: 16px; color: #eee; font-family: Roboto Condensed;" aria-controls="relationships" role="tab" data-toggle="tab"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"> Table View</a></li>
+    </ul>
+    <div class="btn-group btn-group-sm pull-right hidden" role="toolbar" style="padding-right: 20px; padding-top: 4px;">
+      <button type="button" class="btn btn-sm btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-map2-green.png" style="width: 22px; padding: 4px;"></button>
+      <button type="button" class="btn btn-sm btn-default" style="background: transparent; border-color: #999;"><img src="/static/img/icon-table.png" style="width: 22px; padding: 4px;"></button>
     </div>
   </div>
   <div class="row">

@@ -9,6 +9,8 @@ header {
   -webkit-box-shadow: 0 1px 4px rgba(31,54,79,.2);
   -moz-box-shadow: 0 1px 4px rgba(31,54,79,.2);
   box-shadow: 0 1px 4px rgba(31,54,79,.2);
+  font-family: Roboto Condensed;
+  font-size: 16px;
   &.header {
     top: 0;
   }
@@ -30,7 +32,7 @@ header {
     ul.list-inline {
       margin-bottom: 0;
       > li {
-        border-top: solid 5px $brand-primary;
+        border-top: solid 4px $brand-primary;
         padding-left: 0;
         padding-right: 0;
         &:hover, a:hover, a:focus {
@@ -41,8 +43,8 @@ header {
           line-height: $navbar-height;
           height: $navbar-height;
           color: $gray-light;
-          padding-left: 24px;
-          padding-right: 24px;
+          padding-left: 26px;
+          padding-right: 26px;
           display: inline-block;
           &:hover,
           &:focus {

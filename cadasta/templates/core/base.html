@@ -108,7 +108,7 @@
           <a class="btn btn-help pull-right visible-md-inline visible-lg-inline" aria-label="Help" id="help-link" href="#" style="padding-top: 16px;">
             <span class="glyphicon glyphicon-question-sign"></span>
           </a>
-          <nav class="nav hidden" role="navigation">
+          <nav class="nav" role="navigation">
             <ul class="list-inline visible-md-block visible-lg-block">
               <li class="dashboard">
                 <a href="{% url 'project:list' %}">
@@ -117,7 +117,7 @@
               </li><!--
               --><li class="projects">
                 <a href="{% url 'project:list' %}">
-                  {% trans "Habitat for Humanity" %}
+                  {% trans "My Projects" %}
                 </a>
               </li><!--
               --><li class="organizations hidden">
@@ -306,13 +306,5 @@
       $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).hide(); });
     }, 5000);
     </script>
-    <script>
-      // User tracking
-      window.inlineManualTracking = {
-        uid: "{{ user.id }}",
-        username: "{{ user.username }}"
-      }
-    </script>
-    <script type="text/javascript" src="{% static 'js/inline-manual-player.js' %}"></script>
   </body>
 </html>

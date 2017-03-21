@@ -174,7 +174,7 @@ body.tinted-bg #page-content { // for bg image
   margin: 0 auto;
   padding: 0;
   position: absolute;
-  top: 136px;
+  top: 140px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -375,7 +375,7 @@ main.container-fluid {
         font-family: $font-family-sans-serif-alt;
         padding: 10px;
         border-radius: 0;
-        background: $body-bg;
+        background: $gray-light;
         color: $gray-dark;
         &:hover, a:hover, a:focus {
           //@include button-variant(#fff, lighten($btn-blue-bg, 5%), $brand-gold);
@@ -405,6 +405,7 @@ main.container-fluid {
         color: $gray-medium;
         font-weight: normal;
         display: inline-block;
+        text-transform: capitalize !important;
       }
     }
     .glyphicon-globe, .glyphicon-envelope, .glyphicon-earphone { // url and contacts in overview

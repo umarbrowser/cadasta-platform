@@ -21,7 +21,7 @@
             autoClose: false,
             pushBody: true,
             closeOnClick: true,
-            width: "15%",
+            width: "30%",
             onTogglerClick: function () {
                 //code to be executed when the toggler arrow was clicked
             },
@@ -45,9 +45,9 @@
         var options = $.extend({}, defaults, userOptions);
 
 
-        body.originalMarginLeft = $("body").css("margin-left");
-        body.originalMarginRight = $("body").css("margin-right");
-        body.width = $("body").width();
+        body.originalMarginLeft = $(".content-single > .row").css("margin-left");
+        body.originalMarginRight = $(".content-single > .row").css("margin-right");
+        body.width = $(".content-single > .row").width();
 
         initialCode = this.html();
 
@@ -169,7 +169,7 @@
                     switchArrow("right");
                     menu.status = "opened";
                     if (options.pushBody) {
-                        $("body").css("margin-left", menu.width() + 20);
+                        $(".content-single > .row").css("margin-left", menu.width() + 20);
                     }
                 }
             } else if (options.side == "right") {
@@ -185,7 +185,7 @@
                     switchArrow("left");
                     menu.status = "opened";
                     if (options.pushBody) {
-                        $("body").css("margin-right", menu.width() + 20);
+                        $(".content-single > .row").css("margin-right", menu.width() + 20);
                     }
                 }
             }
@@ -216,14 +216,14 @@
                 switchArrow("right");
                 menu.status = "opened";
                 if (options.pushBody) {
-                    $("body").css("margin-left", menu.width() + 20);
+                    $(".content-single > .row").css("margin-left", menu.width() + 20);
                 }
 
             } else if (options.side == "right") {
                 switchArrow("left");
                 menu.status = "opened";
                 if (options.pushBody) {
-                    $("body").css("margin-right", menu.width() + 20);
+                    $(".content-single > .row").css("margin-right", menu.width() + 20);
                 }
             }
         }
@@ -238,7 +238,7 @@
             if (options.side == "left") {
 
                 if (options.pushBody) {
-                    $("body").animate({marginLeft: body.originalMarginLeft}, {duration: options.duration});
+                    $(".content-single > .row").animate({marginLeft: body.originalMarginLeft}, {duration: options.duration});
                 }
 
                 menu.animate({
@@ -259,7 +259,7 @@
             } else if (options.side == "right") {
 
                 if (options.pushBody) {
-                    $("body").animate({marginRight: body.originalMarginRight}, {duration: options.duration});
+                    $(".content-single > .row").animate({marginRight: body.originalMarginRight}, {duration: options.duration});
                 }
 
                 menu.animate({
@@ -296,7 +296,7 @@
             if (options.side == "left") {
 
                 if (options.pushBody) {
-                    $("body").animate({marginLeft: menu.width() + 20}, {duration: options.duration});
+                    $(".content-single > .row").animate({marginLeft: menu.width() + 0}, {duration: options.duration});
                 }
 
                 menu.animate({
@@ -317,7 +317,7 @@
             } else if (options.side == "right") {
 
                 if (options.pushBody) {
-                    $("body").animate({marginRight: menu.width() + 20}, {duration: options.duration});
+                    $(".content-single > .row").animate({marginRight: menu.width() + 0}, {duration: options.duration});
                 }
 
                 menu.animate({
@@ -344,7 +344,7 @@
 
 
         function forSmallBody() {
-            var bodyWidth = $("body").width();
+            var bodyWidth = $(".content-single > .row").width();
             if (bodyWidth <= 480) {
                 options.pushBody = false;
                 options.closeOnClick = true;
